@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Nguyễn Thị Hương",
+    "location": "Hà Nội",
+    "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+    "rating": 5,
+    "text": "Tôi đã mua đôi giày chạy bộ Nike từ cửa hàng cách đây 3 tháng và vẫn rất hài lòng. Chất lượng tuyệt vời, kiểu dáng đẹp và đặc biệt là rất thoải mái khi sử dụng. Sẽ tiếp tục ủng hộ cửa hàng trong tương lai!"
+  },
+  {
+    "name": "Trần Văn Minh",
+    "location": "TP. Hồ Chí Minh",
+    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+    "rating": 4,
+    "text": "Adidas Ultraboost thực sự là một đôi giày tuyệt vời cho việc chạy bộ hàng ngày. Đế giày êm ái, thiết kế hiện đại và thoáng khí. Tuy nhiên, giá hơi cao so với mặt bằng chung. Nhưng nhìn chung, tôi rất hài lòng với sản phẩm này."
+  },
+  {
+    "name": "Phạm Thị Mai",
+    "location": "Đà Nẵng",
+    "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+    "rating": 5,
+    "text": "Đây là lần thứ 3 tôi mua giày tại cửa hàng và lần nào cũng hài lòng. Lần này tôi mua Puma Velocity Nitro và thực sự ấn tượng với sự thoải mái và hỗ trợ mà đôi giày mang lại. Nhân viên tư vấn rất nhiệt tình, giúp tôi chọn được size phù hợp."
+  },
+  {
+    "name": "Lê Hoàng Anh",
+    "location": "Hải Phòng",
+    "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+    "rating": 3,
+    "text": "Giày New Balance chất lượng tốt, nhưng tôi đã gặp một số vấn đề với dịch vụ giao hàng. Mất gần 10 ngày mới nhận được sản phẩm và hộp giày hơi bị móp. Tuy nhiên, sau khi phản hồi, cửa hàng đã xử lý rất nhanh và chu đáo."
+  },
+  {
+    "name": "Võ Thị Thanh Hà",
+    "location": "Nha Trang",
+    "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80",
+    "rating": 5,
+    "text": "Reebok Nano X1 là đôi giày tập luyện tuyệt vời! Tôi sử dụng cho cả chạy bộ và tập gym, cảm giác rất ổn định và hỗ trợ tốt. Đặc biệt ấn tượng với độ bền sau 6 tháng sử dụng. Chắc chắn sẽ tiếp tục mua hàng ở đây."
+  },
+  {
+    "name": "Nguyễn Đức Thành",
+    "location": "Cần Thơ",
+    "image": "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
+    "rating": 4,
+    "text": "Giày Under Armour HOVR rất nhẹ và thoải mái, đúng như mô tả. Tôi thích công nghệ đệm của giày, giúp giảm áp lực lên đầu gối khi chạy đường dài. Điểm trừ duy nhất là màu sắc thực tế hơi khác so với hình ảnh trên website."
+  }
+]

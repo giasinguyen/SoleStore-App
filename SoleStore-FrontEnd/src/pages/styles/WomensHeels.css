@@ -1,0 +1,290 @@
+/* Women's Heels specific styling */
+
+/* General button styles */
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #2563eb;
+}
+
+.btn-outline {
+  border: 1px solid #3b82f6;
+  color: #3b82f6;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: #3b82f6;
+  color: white;
+}
+
+/* Filter button styles */
+.filter-button {
+  transition: all 0.3s ease;
+}
+
+.filter-button.active {
+  background-color: #3b82f6;
+  color: white;
+}
+
+/* Product badges */
+.badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.badge-new {
+  background-color: #10b981;
+  color: white;
+}
+
+.badge-sale {
+  background-color: #ef4444;
+  color: white;
+}
+
+.badge-bestseller {
+  background-color: #f59e0b;
+  color: white;
+}
+
+/* Category-specific styling */
+.stiletto-category .product-card:hover {
+  box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.3);
+}
+
+.block-category .product-card:hover {
+  box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.3);
+}
+
+.kitten-category .product-card:hover {
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.3);
+}
+
+/* Product card styling */
+.product-card {
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+  transition: all 0.5s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+/* Loading indicator */
+.loading-indicator {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.loading-indicator div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #3b82f6;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.loading-indicator div:nth-child(1) {
+  left: 8px;
+  animation: loading-indicator1 0.6s infinite;
+}
+
+.loading-indicator div:nth-child(2) {
+  left: 32px;
+  animation: loading-indicator2 0.6s infinite;
+}
+
+@keyframes loading-indicator1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes loading-indicator2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+/* Fade-in animation for products */
+.fade-in {
+  animation: fadeIn 0.5s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover lift effect for brand logos */
+.hover-lift {
+  transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+/* Hero section enhancements */
+.hero-section {
+  position: relative;
+}
+
+.hero-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to top, rgba(249, 250, 251, 1), transparent);
+}
+
+/* Better focus states for accessibility */
+button:focus,
+input:focus,
+a:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Sticky sidebar adjustments */
+.sticky {
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+/* Scrollbar styling for better UX */
+.sticky::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sticky::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.sticky::-webkit-scrollbar-thumb {
+  background: #c5c5c5;
+  border-radius: 3px;
+}
+
+/* Enhance product card readability */
+.product-card h3 {
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+/* Improved touch targets for mobile */
+@media (max-width: 768px) {
+  button,
+  .filter-button,
+  input[type="radio"],
+  input[type="checkbox"] {
+    min-height: 44px;
+  }
+
+  label {
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .product-image-container {
+    height: 240px !important;
+  }
+
+  /* Mobile filter drawer animation */
+  .fixed.inset-0 .absolute {
+    animation: slideInRight 0.3s ease forwards;
+  }
+
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}
+
+/* Special styling for heels */
+.stiletto-category::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 4px;
+  background-color: #ec4899;
+  border-radius: 2px;
+}
+
+.block-category::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 4px;
+  background-color: #8b5cf6;
+  border-radius: 2px;
+}
+
+.kitten-category::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 4px;
+  background-color: #3b82f6;
+  border-radius: 2px;
+}
+
+/* Color indicators */
+.color-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 4px;
+}

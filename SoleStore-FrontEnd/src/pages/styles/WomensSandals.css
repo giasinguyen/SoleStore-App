@@ -1,0 +1,144 @@
+/* User-friendly enhancements */
+
+/* Better focus states for accessibility */
+button:focus, input:focus, a:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+  
+  /* Smoother transitions */
+  .product-card, button, .badge, input {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* More comfortable spacing in mobile view */
+  @media (max-width: 768px) {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    .product-card {
+      margin-bottom: 1.5rem;
+    }
+  }
+  
+  /* Improved filter sidebar */
+  .sticky {
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+  
+  /* Scrollbar styling for better UX */
+  .sticky::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .sticky::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+  
+  .sticky::-webkit-scrollbar-thumb {
+    background: #c5c5c5;
+    border-radius: 3px;
+  }
+  
+  /* Enhance product card readability */
+  .product-card h3 {
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+  
+  /* Improved touch targets for mobile */
+  @media (max-width: 768px) {
+    button, .filter-button, input[type="radio"], input[type="checkbox"] {
+      min-height: 44px;
+    }
+    
+    label {
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+    }
+  }
+  
+  /* Visual feedback on interactions */
+  .product-card:active {
+    transform: scale(0.98);
+  }
+  
+  /* Enhanced badges with better contrast */
+  .badge {
+    font-weight: 600;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  /* Better mobile filter slide-in animation */
+  .mobile-filter-drawer {
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  /* Add helpful empty state styling */
+  .empty-results {
+    padding: 2rem;
+    text-align: center;
+    background-color: #f9fafb;
+    border-radius: 0.5rem;
+    color: #6b7280;
+  }
+  
+  /* Read more/less toggle for reviews */
+  .review-toggle {
+    color: #3b82f6;
+    font-weight: 500;
+    margin-top: 0.5rem;
+    cursor: pointer;
+  }
+  
+  /* Helper classes for better spacing */
+  .mb-half {
+    margin-bottom: 0.5rem;
+  }
+  
+  .py-half {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Enhanced price display */
+  .price-display {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  
+  .price-original {
+    text-decoration: line-through;
+    color: #9ca3af;
+    font-size: 0.9rem;
+  }
+  
+  /* Helpful category indicators */
+  .category-tag {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: #f3f4f6;
+    color: #4b5563;
+    margin-right: 0.5rem;
+  }

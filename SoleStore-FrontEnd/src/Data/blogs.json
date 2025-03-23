@@ -1,0 +1,162 @@
+[
+    {
+        "id": 1,
+        "title": "Sự Tiến Hóa Của Giày Chạy Bộ",
+        "author": "Sarah Johnson",
+        "date": "2023-04-15",
+        "category": "Công Nghệ",
+        "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+        "summary": "Công nghệ đã thay đổi giày chạy bộ qua các thập kỷ như thế nào",
+        "content": "<p>Giày chạy bộ hiện đại đã phát triển rất xa so với khởi nguồn đơn giản. Từ những đôi đế cao su sơ khai, nay đã trở thành những sản phẩm kỹ thuật cao giúp nâng cao hiệu suất và giảm nguy cơ chấn thương.</p><h3>Những Ngày Đầu Tiên</h3><p>Vào những năm 1960, giày chạy có thiết kế đơn giản với đế cao su mỏng và phần trên cơ bản. Chúng hầu như không có lớp đệm hay hỗ trợ, nhưng là bước khởi đầu của giày thể thao chuyên dụng.</p>"
+    },
+    {
+        "id": 6,
+        "title": "Cách Chọn Giày Chạy Bộ Phù Hợp Với Dáng Chạy Của Bạn",
+        "author": "Nguyễn Văn Nam",
+        "date": "2024-03-20",
+        "category": "Thể Thao",
+        "image": "https://bizweb.dktcdn.net/100/481/981/articles/shutterstock-1099735934-6289-1574845586.jpg?v=1680755335697",
+        "summary": "Hướng dẫn chọn giày chạy bộ tối ưu theo từng kiểu dáng chạy và địa hình.",
+        "content": "<p>Việc lựa chọn một đôi giày chạy bộ phù hợp không chỉ giúp tăng hiệu quả luyện tập mà còn ngăn ngừa chấn thương. Tùy theo dáng chạy, bạn cần chọn loại giày có độ hỗ trợ và đệm khác nhau.</p><h3>Phân Loại Dáng Chạy</h3><p>Các dáng chạy phổ biến bao gồm: Neutral (bình thường), Overpronation (lệch vào trong) và Supination (lệch ra ngoài). Mỗi loại sẽ phù hợp với cấu trúc giày riêng.</p>"
+    },
+    {
+        "id": 8,
+        "title": "5 Mẹo Bảo Quản Giày Da Đúng Cách",
+        "author": "Phạm Quốc Huy",
+        "date": "2024-04-12",
+        "category": "Mẹo Vặt",
+        "image": "https://cdn.tgdd.vn/Files/2019/04/10/1159834/cach-bao-quan-giay-da-dep-nhu-moi-1_700x400.jpg",
+        "summary": "Hướng dẫn chi tiết cách chăm sóc và giữ gìn giày da luôn như mới.",
+        "content": "<p>Giày da cần được bảo quản đúng cách để tránh bong tróc và khô nứt. Việc sử dụng xi đánh giày, bảo quản nơi khô ráo và hạn chế tiếp xúc nước là những bước cơ bản bạn cần lưu ý.</p><h3>Mẹo Bảo Quản Cụ Thể</h3><ol><li>Lau sạch giày sau mỗi lần sử dụng.</li><li>Dùng xi hoặc kem dưỡng da định kỳ.</li><li>Bảo quản trong túi hoặc hộp thoáng khí.</li></ol>"
+    },
+    {
+        "id": 9,
+        "title": "Giày Leo Núi: Lựa Chọn Và Kinh Nghiệm Thực Tế",
+        "author": "Lê Minh Tuấn",
+        "date": "2024-05-01",
+        "category": "Phiêu Lưu",
+        "image": "https://viettrekking.vn/wp-content/uploads/2020/01/3bf4c20ee954b9cf184ea63acc3039cd.jpg",
+        "summary": "Tất cả những điều bạn cần biết khi mua giày leo núi để đảm bảo an toàn và thoải mái.",
+        "content": "<p>Giày leo núi cần đáp ứng tiêu chí bám tốt, chống thấm nước và hỗ trợ cổ chân. Lựa chọn đúng loại giày giúp bạn chinh phục những cung đường khó khăn mà không gặp phải các vấn đề về chân.</p><h3>Kinh Nghiệm Thực Tế</h3><p>Nên thử giày vào cuối ngày và đi tất leo núi khi thử để có cảm giác chính xác nhất. Ưu tiên giày nhẹ nhưng chắc chắn, phù hợp với địa hình bạn thường leo.</p>"
+    },
+    {
+        "id": 2,
+        "title": "Lợi Ích Của Thiền Đối Với Sức Khỏe Tinh Thần",
+        "author": "Nguyễn Minh Anh",
+        "date": "2024-02-10",
+        "category": "Sức Khỏe",
+        "image": "https://cdn.benhvienthucuc.vn/wp-content/uploads/2024/03/loi-ich-cua-thien-doi-voi-tam-tri.jpg",
+        "summary": "Thiền giúp giảm căng thẳng và cải thiện tinh thần như thế nào?",
+        "content": "<p>Thiền định đã được chứng minh là phương pháp hiệu quả giúp giảm căng thẳng và cải thiện sức khỏe tinh thần. Bằng cách tập trung vào hơi thở và hiện tại, bạn có thể làm dịu tâm trí và cảm xúc.</p><h3>Các Kỹ Thuật Cơ Bản</h3><p>Thiền quán niệm, thiền hơi thở và thiền hành là những phương pháp phổ biến, dễ áp dụng và mang lại lợi ích lâu dài cho sức khỏe.</p>"
+    },
+    {
+        "id": 3,
+        "title": "5 Món Ăn Đường Phố Nổi Tiếng Ở Việt Nam",
+        "author": "Trần Hải Yến",
+        "date": "2024-03-05",
+        "category": "Ẩm Thực",
+        "image": "https://phunuvietnam.mediacdn.vn/thumb_w/700/179072216278405120/2022/7/10/avatar1657388865047-16573888668831680555156-39-0-439-640-crop-165742144567120770328.jpg",
+        "summary": "Khám phá các món ăn đường phố hấp dẫn mà bạn không nên bỏ lỡ khi đến Việt Nam",
+        "content": "<p>Ẩm thực đường phố Việt Nam vô cùng phong phú và hấp dẫn. Từ phở bò Hà Nội đến bánh mì Sài Gòn, mỗi món ăn đều mang đậm bản sắc văn hóa và hương vị riêng biệt.</p><h3>Danh Sách Món Ngon</h3><ul><li>Phở bò</li><li>Bánh mì</li><li>Bánh xèo</li><li>Gỏi cuốn</li><li>Chè ba màu</li></ul>"
+    },
+    {
+        "id": 10,
+        "title": "Lịch Sử Phát Triển Của Giày Tây Nam",
+        "author": "Đỗ Hoàng Anh",
+        "date": "2024-05-10",
+        "category": "Thời Trang Nam",
+        "image": "https://pos.nvncdn.com/465636-2920/art/artCT/20210111_MvCj8y5ORbZxwg89XHntS5u3.jpg",
+        "summary": "Tìm hiểu quá trình hình thành và phát triển của các kiểu giày tây nam qua các thời kỳ.",
+        "content": "<p>Giày tây nam đã xuất hiện từ thế kỷ 19 và không ngừng phát triển về kiểu dáng, chất liệu và công năng. Những mẫu phổ biến hiện nay như Oxford, Derby và Loafer không chỉ mang tính thẩm mỹ cao mà còn rất tiện dụng.</p><h3>Các Kiểu Giày Kinh Điển</h3><ul><li>Giày Oxford: Sang trọng, trang trọng</li><li>Giày Derby: Phù hợp với trang phục công sở</li><li>Giày Loafer: Năng động và dễ phối đồ</li></ul>"
+    },
+    {
+        "id": 4,
+        "title": "Công Nghệ AI Trong Y Tế Hiện Đại",
+        "author": "Phạm Quốc Huy",
+        "date": "2024-03-15",
+        "category": "Công Nghệ",
+        "image": "https://vinbrain.net/public/uploads/1blog/genai-y-te/genai-1.jpg",
+        "summary": "Trí tuệ nhân tạo đang thay đổi cách chúng ta chẩn đoán và điều trị bệnh ra sao?",
+        "content": "<p>AI đã tạo ra bước tiến lớn trong lĩnh vực y tế, hỗ trợ bác sĩ trong việc chẩn đoán và điều trị bệnh chính xác hơn. Công nghệ này giúp phát hiện sớm các bệnh hiểm nghèo như ung thư và tim mạch.</p><h3>Ứng Dụng Nổi Bật</h3><p>AI giúp phân tích hình ảnh y học, quản lý dữ liệu bệnh nhân và thậm chí hỗ trợ phẫu thuật thông qua robot thông minh.</p>"
+    },
+    {
+        "id": 5,
+        "title": "Hướng Dẫn Chăm Sóc Da Mùa Hè",
+        "author": "Lê Thị Kim Ngân",
+        "date": "2024-04-01",
+        "category": "Làm Đẹp",
+        "image": "https://medlatec.vn/media/13131/content/20201106_cac-buoc-cham-soc-da-mat-5.jpg",
+        "summary": "Các bước bảo vệ và dưỡng da đúng cách trong mùa nắng nóng",
+        "content": "<p>Mùa hè với ánh nắng gay gắt dễ làm da khô và tổn thương. Việc bảo vệ da khỏi tia UV và giữ ẩm là vô cùng quan trọng để duy trì làn da khỏe mạnh.</p><h3>Các Bước Cơ Bản</h3><ol><li>Dùng kem chống nắng hàng ngày</li><li>Uống đủ nước</li><li>Sử dụng mặt nạ dưỡng ẩm</li></ol>"
+    },
+    {
+        "id": 7,
+        "title": "Xu Hướng Giày Sneaker Hot Nhất Năm 2024",
+        "author": "Trần Thị Bích Ngọc",
+        "date": "2024-04-05",
+        "category": "Thời Trang",
+        "image": "https://www.elleman.vn/app/uploads/2024/07/10/235560/cover10724-sneakers-elleman-1.png",
+        "summary": "Cập nhật các mẫu sneaker đang làm mưa làm gió trên thị trường thời trang.",
+        "content": "<p>Năm 2024 đánh dấu sự lên ngôi của các mẫu sneaker thiết kế độc đáo, thân thiện với môi trường và ứng dụng công nghệ tiên tiến. Những thương hiệu như Nike, Adidas và New Balance đều ra mắt các bộ sưu tập gây sốt.</p><h3>Một Số Mẫu Tiêu Biểu</h3><ul><li>Nike Air Max 2024</li><li>Adidas Ultraboost Eco Edition</li><li>New Balance 990v6</li></ul>"
+    },
+    {
+        "id": 7,
+        "title": "Top 10 Điểm Đến Du Lịch Hấp Dẫn Ở Việt Nam",
+        "author": "Đỗ Văn Minh",
+        "date": "2024-04-10",
+        "category": "Du Lịch",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrVpOds94ScfP_75CHW70PqnBPxtxZEyVMQ&s",
+        "summary": "Khám phá những địa danh nổi bật không thể bỏ qua khi du lịch Việt Nam",
+        "content": "<p>Việt Nam có nhiều điểm đến hấp dẫn như Vịnh Hạ Long, Hội An, Đà Lạt và Phú Quốc. Mỗi nơi đều mang nét đẹp thiên nhiên và văn hóa riêng biệt.</p><h3>Danh Sách Điểm Đến</h3><ul><li>Vịnh Hạ Long</li><li>Hội An</li><li>Đà Lạt</li><li>Phú Quốc</li><li>Sapa</li></ul>"
+    },
+    {
+        "id": 11,
+        "title": "Giày Lười – Sự Lựa Chọn Hoàn Hảo Cho Sự Tiện Lợi Và Phong Cách",
+        "author": "Nguyễn Thanh Phong",
+        "date": "2024-05-15",
+        "category": "Thời Trang Nam",
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMqSJg-ph5oCygPm8YJ3KcHHEvrznF7-rurQ&s",
+        "summary": "Tìm hiểu về giày lười và lý do chúng ngày càng được nam giới yêu thích.",
+        "content": "<p>Giày lười (Loafers) là lựa chọn hoàn hảo cho những ai yêu thích sự tiện lợi nhưng không kém phần lịch lãm. Không cần dây buộc, dễ dàng xỏ vào tháo ra, phù hợp với nhiều phong cách từ công sở đến dạo phố.</p><h3>Ưu điểm nổi bật</h3><ul><li>Tiện lợi, dễ sử dụng</li><li>Đa dạng phong cách và chất liệu</li><li>Phù hợp với mọi lứa tuổi</li></ul>"
+    },
+    {
+        "id": 12,
+        "title": "Top 7 Thương Hiệu Giày Sneaker Nổi Tiếng Nhất Thế Giới",
+        "author": "Lâm Nhật Minh",
+        "date": "2024-05-20",
+        "category": "Thời Trang",
+        "image": "https://bizweb.dktcdn.net/100/413/756/articles/untitled-design-8.jpg?v=1685934846620",
+        "summary": "Khám phá những thương hiệu giày sneaker đình đám nhất hiện nay, từ Nike đến Balenciaga.",
+        "content": "<p>Sneaker không chỉ là giày thể thao mà còn là biểu tượng văn hóa thời trang. Các thương hiệu nổi tiếng như Nike, Adidas, Puma, Balenciaga, Converse, Vans và New Balance đều đã tạo nên những mẫu giày mang tính biểu tượng trên toàn cầu.</p><h3>Danh sách các thương hiệu</h3><ol><li>Nike</li><li>Adidas</li><li>Puma</li><li>Balenciaga</li><li>Converse</li><li>Vans</li><li>New Balance</li></ol>"
+    },
+    {
+        "id": 13,
+        "title": "Cách Phối Đồ Với Giày Sneaker Trắng Cho Nam",
+        "author": "Phạm Hoàng Duy",
+        "date": "2024-06-01",
+        "category": "Phong Cách Sống",
+        "image": "https://5sfashion.vn/storage/upload/images/ckeditor/1sjE3f0kqP3RYeWMZBVdTxkLAtCgP37lxhUt5FGE.jpg",
+        "summary": "Những mẹo phối đồ đơn giản mà phong cách với giày sneaker trắng.",
+        "content": "<p>Sneaker trắng là item không thể thiếu trong tủ giày của nam giới. Bạn có thể dễ dàng kết hợp chúng với jeans, quần short hoặc chinos để tạo nên phong cách năng động, trẻ trung nhưng không kém phần thanh lịch.</p><h3>Gợi ý phối đồ</h3><ul><li>Áo thun basic + quần jeans rách</li><li>Sơ mi trắng + quần kaki be</li><li>Áo khoác denim + quần jogger</li></ul>"
+    },
+    {
+        "id": 14,
+        "title": "Giày Cao Gót – Vũ Khí Tôn Dáng Của Phái Đẹp",
+        "author": "Trần Khánh Linh",
+        "date": "2024-06-10",
+        "category": "Thời Trang Nữ",
+        "image": "https://vinagiay.vn/wp-content/uploads/2024/06/38.png",
+        "summary": "Tìm hiểu về sức hút không thể cưỡng lại của những đôi giày cao gót trong thế giới thời trang nữ.",
+        "content": "<p>Giày cao gót giúp tôn dáng, kéo dài đôi chân và mang lại sự tự tin cho phái đẹp. Từ kiểu dáng cổ điển đến hiện đại, cao gót luôn là phụ kiện quyền lực cho mọi phong cách thời trang.</p><h3>Các loại giày cao gót phổ biến</h3><ul><li>Giày mũi nhọn</li><li>Giày sandal cao gót</li><li>Giày đế vuông</li></ul>"
+    },
+    {
+        "id": 15,
+        "title": "Xu Hướng Giày Bốt (Boots) Năm 2024",
+        "author": "Đinh Văn Khoa",
+        "date": "2024-06-20",
+        "category": "Thời Trang",
+        "image": "https://vcdn1-ngoisao.vnecdn.net/2024/10/14/boots1-1728892008-3522-1728892178.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=71vB_bjHIaTiINh05vN8sQ",
+        "summary": "Giày boots trở lại mạnh mẽ trong xu hướng thời trang năm 2024 với nhiều thiết kế đa dạng.",
+        "content": "<p>Boots là lựa chọn lý tưởng cho mùa đông hoặc phong cách mạnh mẽ, cá tính. Năm 2024 chứng kiến sự bùng nổ của các mẫu boots da bóng, boots cổ cao và thiết kế chunky đậm chất đường phố.</p><h3>Mẫu boots thịnh hành</h3><ul><li>Combat boots</li><li>Chelsea boots</li><li>Ankle boots</li></ul>"
+    }
+]

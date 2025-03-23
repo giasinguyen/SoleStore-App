@@ -1,0 +1,83 @@
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    /* Chiều cao có thể chỉnh */
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+.hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Hiển thị ảnh đầy đủ, không méo */
+    z-index: 1;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    /* Lớp phủ mờ đen */
+    z-index: 2;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 3;
+    padding: 20px;
+}
+
+.hero-content h1 {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-light {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.btn-light:hover {
+    background-color: #f0f0f0;
+}
+
+.btn-dark {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.btn-dark:hover {
+    background-color: #333333;
+}
