@@ -3,12 +3,11 @@ import mongoose from 'mongoose';
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Please enter product name'],
-    trim: true
+    required: true
   },
   brand: {
     type: String,
-    required: [true, 'Please enter brand name']
+    required: true
   },
   price: {
     type: Number,

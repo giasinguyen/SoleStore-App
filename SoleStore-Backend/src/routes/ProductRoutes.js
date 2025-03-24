@@ -1,31 +1,21 @@
 import express from 'express';
-import { ProductController } from '../controllers/ProductController.js';
+import { 
+  getProducts, 
+  getProductById, 
+  createProduct, 
+  updateProduct, 
+  deleteProduct 
+} from '../controllers/ProductController.js';
 
-class ProductRoutes {
-  constructor() {
-    this.router = express.Router();
-    this.initializeRoutes();
-  }
+const router = express.Router();
 
-  initializeRoutes() {
-    // Routes for /api/products
-    this.router.route('/')
-      .get(ProductController.getProducts)
-      .post(ProductController.createProduct);
+router.route('/')
+  .get(getProducts)
+  .post(createProduct);
 
-    // Get products by category
-    this.router.route('/category/:category')
-      .get(ProductController.getProductsByCategory);
+router.route('/:id')
+  .get(getProductById)
+  .put(updateProduct)
+  .delete(deleteProduct);
 
-    this.router.route('/:id')
-      .get(ProductController.getProductById)
-      .put(ProductController.updateProduct)
-      .delete(ProductController.deleteProduct);
-  }
-
-  getRouter() {
-    return this.router;
-  }
-}
-
-export default new ProductRoutes().getRouter();
+export default router;
