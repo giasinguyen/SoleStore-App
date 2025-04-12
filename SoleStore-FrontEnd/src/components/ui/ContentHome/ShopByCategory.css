@@ -1,42 +1,280 @@
-.category-card {
-    height: 300px;
+/* Section Header */
+.category-section .section-header h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.category-section .title-underline {
+    height: 3px;
+    width: 60%;
+    background: linear-gradient(to right, #4481eb, #04befe);
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Card Container */
+.category-card-container {
+    perspective: 1000px;
+    height: 400px;
     cursor: pointer;
+}
+
+/* Card Styling */
+.category-card {
     position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease;
+}
+
+.category-card-container:hover .category-card {
+    transform: rotateY(180deg);
+}
+
+/* Card Sides */
+.category-card-front,
+.category-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Front Card */
+.category-card-front {
+    background-color: white;
+}
+
+.category-card-front .image-container {
+    position: relative;
+    height: 100%;
     overflow: hidden;
 }
 
-.category-card img {
-    object-fit: cover;
-    height: 100%;
+.category-card-front img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     transition: transform 0.5s ease;
-    display: block;
 }
 
-.category-card:hover img {
-    transform: scale(1.1);
+.category-card-container:hover .category-card-front img {
+    transform: scale(1.05);
 }
 
-/* Luôn hiển thị overlay-text */
-.overlay-text {
+.category-card-front .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0) 100%);
+}
+
+.category-card-front .content {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+    right: 0;
+    padding: 25px;
+    color: white;
+    z-index: 2;
+}
+
+.category-card-front .content h3 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.category-card-front .content p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    margin-bottom: 15px;
+}
+
+.category-card-front .explore-text {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #4481eb;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+.category-card-container:hover .explore-text {
+    gap: 12px;
+    opacity: 1;
+}
+
+/* Back Card */
+.category-card-back {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 20px;
+}
+
+.back-content {
+    text-align: center;
+    max-width: 90%;
+}
+
+.category-card-back h3 {
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.category-card-back h3:after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(to right, #4481eb, #04befe);
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.subcategory-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 25px;
+}
+
+.subcategory-list li {
+    margin-bottom: 12px;
+}
+
+.subcategory-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #333;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.subcategory-link svg {
+    transition: transform 0.3s ease;
+}
+
+.subcategory-link:hover {
+    background-color: #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    color: #4481eb;
+}
+
+.subcategory-link:hover svg {
+    transform: translateX(5px);
+}
+
+.all-products-btn {
+    display: inline-block;
+    color: white;
+    background: linear-gradient(to right, #4481eb, #04befe);
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: 500;
+    margin-top: 10px;
+    box-shadow: 0 4px 10px rgba(68, 129, 235, 0.3);
+    transition: all 0.3s ease;
+}
+
+.all-products-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(68, 129, 235, 0.4);
     color: white;
 }
 
-.overlay-text h3,
-.overlay-text p {
-    margin: 0;
+/* View All Button */
+.btn-view-all-categories {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: transparent;
+    color: #333;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-weight: 500;
+    border: 2px solid #eee;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    margin-top: 20px;
 }
 
-.btn-light {
-    font-weight: 500;
+.btn-view-all-categories svg {
+    transition: transform 0.3s ease;
+}
+
+.btn-view-all-categories:hover {
+    border-color: #4481eb;
+    color: #4481eb;
+    background-color: rgba(68, 129, 235, 0.05);
+}
+
+.btn-view-all-categories:hover svg {
+    transform: translateX(5px);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .category-card-container {
+        height: 350px;
+    }
+    
+    .category-card-front .content h3 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .category-card-container {
+        height: 300px;
+        margin-bottom: 20px;
+    }
+    
+    .category-card-front .content {
+        padding: 20px;
+    }
+    
+    .category-card-front .content h3 {
+        font-size: 1.4rem;
+    }
+    
+    .category-card-front .content p {
+        font-size: 0.9rem;
+    }
+    
+    .category-card-back h3 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .category-section .section-header h2 {
+        font-size: 1.75rem;
+    }
 }

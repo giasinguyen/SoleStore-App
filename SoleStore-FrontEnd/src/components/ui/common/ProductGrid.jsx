@@ -1,5 +1,3 @@
-            {/* Visual price range slider */}
-import React from "react";
 import PropTypes from "prop-types";
 import ProductCard from "./ProductCard";
 
