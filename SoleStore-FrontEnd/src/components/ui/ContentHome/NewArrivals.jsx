@@ -18,6 +18,14 @@ const NewArrivals = () => {
     const products = filteredProducts.slice(itemOffset, endOffset);
     const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
 
+    const formatPrice = (amount) => {
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+            minimumFractionDigits: 0
+        }).format(amount);
+    };
+
     const handlePageClick = (event) => {
         const newOffset = (event.selected * itemsPerPage) % filteredProducts.length;
         setItemOffset(newOffset);
@@ -53,7 +61,7 @@ const NewArrivals = () => {
                                         <p className="text-muted">{product.category}</p>
                                     </div>
                                     <div className="d-flex justify-content-between align-items-center mt-3">
-                                        <h5 className="text-primary fw-bold">{product.price}$</h5>
+                                        <h5 className="text-primary fw-bold">{formatPrice(product.price)}</h5>
 
                                         <Button as={Link} to={`/product/${product.id}`}
                                             className="btn btn-dark btn-sm d-flex align-items-center"

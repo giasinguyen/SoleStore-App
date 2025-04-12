@@ -24,6 +24,15 @@ const CartIcon = () => {
     };
 
     const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
+    
+    // Hàm định dạng tiền tệ
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+            minimumFractionDigits: 0
+        }).format(amount);
+    };
 
     return (
         <div className="position-relative me-2">
@@ -57,7 +66,7 @@ const CartIcon = () => {
                                         <small className="cart-item-details">
                                             Size: {item.size}
                                         </small>
-                                        <p className="cart-item-price">${item.price.toFixed(2)}</p>
+                                        <p className="cart-item-price">{formatCurrency(item.price)}</p>
                                     </div>
                                     <button
                                         className="cart-item-remove"
@@ -79,7 +88,7 @@ const CartIcon = () => {
                         <div className="cart-footer">
                             <div className="cart-subtotal">
                                 <span>Tổng cộng:</span>
-                                <span>${subtotal.toFixed(2)}</span>
+                                <span>{formatCurrency(subtotal)}</span>
                             </div>
 
                             <div className="cart-actions">
