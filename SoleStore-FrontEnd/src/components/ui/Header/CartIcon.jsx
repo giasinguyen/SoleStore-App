@@ -1,60 +1,75 @@
-import { ShoppingBag, Trash2 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useOrder } from '../../../context/ContextAPI';
+import { ShoppingBag, Trash2 } from "react-feather";
+import { useOrder } from "../../../context/ContextAPI";
 
 const CartIcon = () => {
-    const { orderList, removeFromOrder } = useOrder();
     const [cartOpen, setCartOpen] = useState(false);
-    const [cartItems, setCartItems] = useState(orderList);
-    
-    useEffect(() => {
-        setCartItems(orderList);
-    }, [orderList]);
-    
+    const cartRef = useRef(null);
     const navigate = useNavigate();
     
+    // Get cart data and functions from context
+    const { orderList, removeFromCart, calculateSubtotal } = useOrder();
+    
+    // Format currency helper function
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('vi-VN', { 
+            style: 'currency', 
+            currency: 'VND',
+            maximumFractionDigits: 0
+        }).format(amount); 
+    };
+    
+    // Handle removing item from cart
+    const handleRemoveItem = (id) => {
+        removeFromCart(id);
+    };
+    
+    // Navigate to a specific page and close cart dropdown
     const handleNavigate = (path) => {
         setCartOpen(false);
         navigate(path);
     };
     
-    const handleRemoveItem = (id) => {
-        removeFromOrder(id);
-    };
-
-    const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
+    // Close cart when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (cartRef.current && !cartRef.current.contains(event.target)) {
+                setCartOpen(false);
+            }
+        };
+        
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
     
-    // Hàm định dạng tiền tệ
-    const formatCurrency = (amount) => {
-        return new Intl.NumberFormat('vi-VN', {
-            style: 'currency',
-            currency: 'VND',
-            minimumFractionDigits: 0
-        }).format(amount);
-    };
+    // Get subtotal from cart items
+    const subtotal = calculateSubtotal();
 
     return (
-        <div className="position-relative me-2">
+        <div className="position-relative me-2" ref={cartRef}>
             <button
                 className="header-icon-button"
                 onClick={() => setCartOpen(!cartOpen)}
+                aria-label="Shopping cart"
             >
                 <ShoppingBag className="icon-svg" />
                 <span className="header-badge">
-                    {cartItems.length}
+                    {orderList.length}
                 </span>
             </button>
 
             {cartOpen && (
                 <div className="cart-dropdown">
                     <div className="cart-header">
-                        <h6 className="mb-0">Giỏ hàng ({cartItems.length} sản phẩm)</h6>
+                        <h6 className="mb-0">Giỏ hàng ({orderList.length} sản phẩm)</h6>
                     </div>
 
                     <div className="cart-items">
-                        {cartItems.length > 0 ? (
-                            cartItems.map(item => (
+                        {orderList.length > 0 ? (
+                            orderList.map(item => (
                                 <div key={item.id} className="cart-item">
                                     <img
                                         src={item.image}
@@ -71,6 +86,7 @@ const CartIcon = () => {
                                     <button
                                         className="cart-item-remove"
                                         onClick={() => handleRemoveItem(item.id)}
+                                        aria-label="Remove item"
                                     >
                                         <Trash2 size={16} />
                                     </button>
@@ -84,7 +100,7 @@ const CartIcon = () => {
                         )}
                     </div>
 
-                    {cartItems.length > 0 && (
+                    {orderList.length > 0 && (
                         <div className="cart-footer">
                             <div className="cart-subtotal">
                                 <span>Tổng cộng:</span>
@@ -92,10 +108,16 @@ const CartIcon = () => {
                             </div>
 
                             <div className="cart-actions">
-                                <button onClick={() => handleNavigate('/checkout')} className="cart-button checkout-button">
+                                <button 
+                                    onClick={() => handleNavigate('/checkout')} 
+                                    className="cart-button checkout-button"
+                                >
                                     Thanh toán
                                 </button>
-                                <button onClick={() => handleNavigate('/cart')} className="cart-button view-cart-button">
+                                <button 
+                                    onClick={() => handleNavigate('/cart')} 
+                                    className="cart-button view-cart-button"
+                                >
                                     Xem giỏ hàng
                                 </button>
                             </div>

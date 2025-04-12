@@ -4,7 +4,7 @@ import { useOrder } from '../context/ContextAPI';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const CartPage = () => {
-    const { orderList, removeFromOrder, updateQuantity } = useOrder();
+    const { orderList, removeFromCart, updateQuantity } = useOrder();
 
     // Tạo độ mờ khi xoá sản phẩm khỏi giỏ hàng
     const [removingId, setRemovingId] = useState(null);
@@ -20,7 +20,7 @@ const CartPage = () => {
         setRemovingId(id);
         // Delay để animation hoàn thành
         setTimeout(() => {
-            removeFromOrder(id);
+            removeFromCart(id);
             setRemovingId(null);
         }, 300);
     };

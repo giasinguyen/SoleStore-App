@@ -2,6 +2,7 @@ import { Minus, Plus, RefreshCw, Shield, Truck } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useOrder } from '../../../context/ContextAPI';
 import products from "../../../Data/products.json";
 import "./ProductDetail.css";
@@ -17,7 +18,7 @@ const formatCurrency = (price) => {
 };
 
 const ProductDetail = () => {
-    const { addToOrder } = useOrder();
+    const { addToCart } = useOrder();
     const { productId } = useParams();
     const productIdd = parseInt(productId);
     const product = products.find((item) => item.id === productIdd);
@@ -43,7 +44,14 @@ const ProductDetail = () => {
 
     const handleAddToCart = () => {
         if (!selectedSize) {
-            alert('Vui lòng chọn size');
+            toast.error('Vui lòng chọn size giày', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
             return;
         }
 
@@ -56,8 +64,17 @@ const ProductDetail = () => {
             image: selectedImage
         };
 
-        addToOrder(orderItem);
-        alert(`Đã thêm ${quantity} sản phẩm ${product.name} (Size: ${selectedSize}) vào giỏ hàng`);
+        addToCart(orderItem);
+        
+        toast.success(`Đã thêm ${quantity} sản phẩm ${product.name} (Size: ${selectedSize}) vào giỏ hàng`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            icon: "🛒"
+        });
     };
 
     // Tìm sản phẩm liên quan

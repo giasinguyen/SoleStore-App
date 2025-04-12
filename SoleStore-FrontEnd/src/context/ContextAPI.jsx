@@ -1,53 +1,86 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-const ContextAPI = createContext();
+// Create a context for managing orders
+const OrderContext = createContext();
 
-// eslint-disable-next-line react/prop-types
+// Order provider component
 export const OrderProvider = ({ children }) => {
-    // Quản lý sản phẩm
-    const [orderList, setOrderList] = useState([]);
+    // Initialize state with data from localStorage if available
+    const [orderList, setOrderList] = useState(() => {
+        const savedCart = localStorage.getItem('cart');
+        return savedCart ? JSON.parse(savedCart) : [];
+    });
 
-    const addToOrder = (dish) => {
-        setOrderList([...orderList, dish]);
+    // Save cart to localStorage whenever it changes
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(orderList));
+    }, [orderList]);
+
+    // Add item to cart
+    const addToCart = (selectedProduct) => {
+        // Check if item is already in cart
+        const existingProductIndex = orderList.findIndex(
+            item => item.id === selectedProduct.id && item.size === selectedProduct.size
+        );
+
+        if (existingProductIndex !== -1) {
+            // Update quantity of existing item
+            const updatedOrderList = [...orderList];
+            updatedOrderList[existingProductIndex] = {
+                ...updatedOrderList[existingProductIndex],
+                quantity: updatedOrderList[existingProductIndex].quantity + selectedProduct.quantity
+            };
+            setOrderList(updatedOrderList);
+        } else {
+            // Add new item to cart
+            setOrderList([...orderList, selectedProduct]);
+        }
     };
-    const removeFromOrder = (id) => {
+
+    // Remove item from cart
+    const removeFromCart = (id) => {
         setOrderList(orderList.filter(item => item.id !== id));
     };
-    const updateQuantity = (id, quantity) => {
-        const updatedOrder = orderList.map(item =>
-            item.id === id ? { ...item, quantity: parseInt(quantity) } : item
-        );
-        setOrderList(updatedOrder);
-    };
-    // Quản lý account
-    const [user, setUser] = useState(null);
 
-    const login = (userData) => {
-        updateUser(userData);
+    // Update quantity of an item in cart
+    const updateQuantity = (id, newQuantity) => {
+        setOrderList(orderList.map(item => 
+            item.id === id ? { ...item, quantity: parseInt(newQuantity) } : item
+        ));
     };
 
-    const logout = () => {
-        updateUser(null);
+    // Calculate subtotal of items in cart
+    const calculateSubtotal = () => {
+        return orderList.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     };
 
-    const register = (newUser) => {
-        updateUser(newUser);
+    // Clear the cart
+    const clearCart = () => {
+        setOrderList([]);
     };
-    const updateUser = (updatedInfo) => {
-        console.log("Cập nhật user với:", updatedInfo);
-        setUser(prev => ({
-            ...prev,
-            ...updatedInfo
-        }));
+
+    // Context value
+    const value = {
+        orderList,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        calculateSubtotal,
+        clearCart
     };
+
     return (
-        <ContextAPI.Provider value={{ user, updateUser, login, logout, register, orderList, setOrderList, addToOrder, removeFromOrder, updateQuantity }}>
+        <OrderContext.Provider value={value}>
             {children}
-        </ContextAPI.Provider>
+        </OrderContext.Provider>
     );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const useOrder = () => {
-    return useContext(ContextAPI);
+OrderProvider.propTypes = {
+    children: PropTypes.node.isRequired
 };
+
+// Custom hook for using the order context in a separate export
+// This helps avoid Fast Refresh issues
+export const useOrder = () => useContext(OrderContext);
