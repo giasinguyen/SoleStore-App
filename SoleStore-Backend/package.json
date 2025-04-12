@@ -1,41 +1,22 @@
 {
-  "name": "solestore-backend",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
   "scripts": {
-    "dev": "vite",
-    "server": "nodemon src/server.js",
-    "dev:all": "concurrently \"npm run dev\" \"npm run server\"",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "import-data": "node src/utils/importData.js"
+    "start": "nodemon --inspect index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongodb": "^6.15.0",
-    "mongoose": "^8.12.2",
-    "nodemon": "^3.1.9",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "mongoose": "^8.13.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "@tailwindcss/postcss": "^4.0.15",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.3.4",
-    "autoprefixer": "^10.4.21",
-    "eslint": "^9.21.0",
-    "eslint-plugin-react-hooks": "^5.1.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^15.15.0",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^4.0.15",
-    "vite": "^6.2.0"
+    "nodemon": "^3.1.9"
   }
 }
