@@ -24,6 +24,22 @@ const RelatedProducts = ({ products, title, calculateDiscountPrice }) => {
     );
   };
 
+  // Hàm để lấy hình ảnh sản phẩm
+  const getProductImage = (product) => {
+    // Nếu có mảng images, sử dụng ảnh đầu tiên
+    if (product.images && product.images.length > 0) {
+      return product.images[0];
+    } 
+    // Nếu có trường image, sử dụng trường đó
+    else if (product.image) {
+      return product.image;
+    } 
+    // Mặc định sử dụng hình ảnh placeholder
+    else {
+      return "https://via.placeholder.com/400x500?text=No+Image";
+    }
+  };
+
   return (
     <div className="my-12">
       <div className="flex flex-col items-center mb-8 text-center">
@@ -59,9 +75,12 @@ const RelatedProducts = ({ products, title, calculateDiscountPrice }) => {
               )}
 
               <img
-                src={product.image}
+                src={getProductImage(product)}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 alt={product.name}
+                onError={(e) => {
+                  e.target.src = "https://via.placeholder.com/400x500?text=No+Image";
+                }}
               />
             </div>
 

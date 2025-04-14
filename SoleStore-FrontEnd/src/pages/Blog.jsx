@@ -1,12 +1,40 @@
-import { useEffect } from 'react';
-import { Badge, Button, Card, Col, Container, Row } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { Badge, Button, Card, Col, Container, Row, Spinner } from 'react-bootstrap';
 import { Link } from "react-router-dom";
-import blogs from "../Data/blogs.json";
+import { blogAPI } from "../services/api";
 
 const Blog = () => {
+    const [blogs, setBlogs] = useState([]);
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        const fetchBlogs = async () => {
+            try {
+                setLoading(true);
+                const data = await blogAPI.getAllBlogs();
+                setBlogs(data);
+                setLoading(false);
+            } catch (error) {
+                console.error('Lỗi khi lấy danh sách blog:', error);
+                setLoading(false);
+            }
+        };
+        
+        fetchBlogs();
     }, []);
+
+    if (loading) {
+        return (
+            <Container className="my-5 d-flex justify-content-center align-items-center" style={{ minHeight: "300px" }}>
+                <Spinner animation="border" role="status" variant="primary">
+                    <span className="visually-hidden">Đang tải...</span>
+                </Spinner>
+            </Container>
+        );
+    }
+
     return (
         <Container className="my-5 shadow p-4 bg-white rounded">
             <h2 className="text-center mb-4">Tin Tức & Khuyến Mãi</h2>

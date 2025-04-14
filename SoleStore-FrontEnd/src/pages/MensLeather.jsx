@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-
-import productsData from "../Data/products.json";
-import "./styles/WomensHeels.css";
+import { productAPI, reviewAPI } from "../services/api";
+import '../App.css'; 
 
 // Import our reusable components
 import HeroBanner from "../components/ui/common/HeroBanner";
@@ -37,116 +35,45 @@ const MensLeather = () => {
             try {
                 setLoading(true);
 
+                // Lấy tất cả sản phẩm từ API
+                const productsData = await productAPI.getAllProducts();
+                
+                // Lọc ra giày da nam
                 const mensLeather = productsData.filter(
                     (product) =>
-                        product.gender === "Nam" &&
-                        ((product.category &&
-                            product.category.toLowerCase().includes("leather")) ||
-                            (product.type && product.type.toLowerCase().includes("leather")) ||
-                            (product.tags &&
-                                Array.isArray(product.tags) &&
-                                product.tags.some(
-                                    (tag) =>
-                                        typeof tag === "string" &&
-                                        tag.toLowerCase().includes("leather")
-                                )))
+                        product.gender === "Nam" && product.type === "Tây" 
                 );
 
+                // Nếu không có sản phẩm giày da nam, sử dụng sản phẩm nam khác
                 const productsToUse =
                     mensLeather.length > 0
                         ? mensLeather
-                        : productsData
-                            .filter((product) => product.gender === "Nam")
-                            .slice(0, 30);
-
+                        : productsData.filter((product) => product.gender === "Nam").slice(0, 30);
+                
+                // Lấy đánh giá từ API
                 try {
-                    const reviewResponse = await axios.get(
-                        "https://67dbd6fd1fd9e43fe476247e.mockapi.io/reviews"
-                    );
-                    const reviewData = reviewResponse.data;
-
-                    let reviewsToUse = Array.isArray(reviewData)
-                        ? reviewData
-                        : reviewData.reviews || reviewData.items || [];
-
-                    setReviews(reviewsToUse.slice(0, 6));
+                    const reviewsData = await reviewAPI.getAllReviews();
+                    
+                    // Lọc các đánh giá liên quan đến sản phẩm hiển thị
+                    const productIds = productsToUse.map(p => p.id.toString());
+                    const relevantReviews = reviewsData.filter(r => 
+                        productIds.includes(r.idProduct)
+                    ).slice(0, 6);
+                    
+                    setReviews(relevantReviews);
                 } catch (reviewError) {
                     console.error("Error loading reviews:", reviewError);
-                    setReviews([
-                        {
-                            name: "Nguyễn Văn An",
-                            location: "Hà Nội",
-                            image:
-                                "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-                            rating: 5,
-                            text: "Tôi mới mua một đôi giày da từ cửa hàng và rất hài lòng. Chất lượng tuyệt vời và rất thoải mái khi đi.",
-                        },
-                    ]);
+                    setReviews([]);
                 }
 
-                const enhancedData = productsToUse.map((product) => ({
-                    ...product,
-                    price:
-                        typeof product.price === "number"
-                            ? `${product.price.toLocaleString("vi-VN")}đ`
-                            : product.price,
-                    image:
-                        product.images && product.images.length > 0
-                            ? product.images[0]
-                            : product.image ||
-                            "https://via.placeholder.com/400x500?text=No+Image",
-                    isNew: product.isNewArrival || product.isNew || false,
-                    bestSeller: product.isFeatured || product.bestSeller || false,
-                    color:
-                        product.colors && product.colors.length > 0
-                            ? product.colors[0]
-                            : product.color || "Đen",
-                    category:
-                        product.type ||
-                        ["stiletto", "block", "kitten"][Math.floor(Math.random() * 3)],
-                    discount:
-                        product.discount ||
-                        (Math.random() > 0.8 ? Math.floor(Math.random() * 20 + 10) : 0),
-                    rating: product.rating || (Math.random() * 2 + 3).toFixed(1),
-                }));
-
-                setProducts(enhancedData);
-                setFilteredProducts(enhancedData);
+                setProducts(productsToUse);
+                setFilteredProducts(productsToUse);
                 setLoading(false);
             } catch (error) {
                 console.error("Error loading data:", error);
-
-                const fallbackProducts = [
-                    {
-                        id: 1,
-                        name: "Classic Oxford",
-                        price: "2.890.000đ",
-                        image:
-                            "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80",
-                        rating: "4.5",
-                        category: "formal",
-                        isNew: true,
-                        discount: 0,
-                        bestSeller: true,
-                        color: "Đen",
-                    },
-                ];
-
-                const fallbackReviews = [
-                    {
-                        name: "Nguyễn Văn An",
-                        location: "Hà Nội",
-                        image:
-                            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-                        rating: 5,
-                        text: "Tôi mới mua một đôi giày da từ cửa hàng và rất hài lòng. Chất lượng tuyệt vời và rất thoải mái khi đi.",
-                    },
-                ];
-
-                setProducts(fallbackProducts);
-                setFilteredProducts(fallbackProducts);
-                setReviews(fallbackReviews);
                 setLoading(false);
+                setProducts([]);
+                setFilteredProducts([]);
             }
         };
 
@@ -176,9 +103,9 @@ const MensLeather = () => {
         activeFilters.push({
             label:
                 activeTab === "bestseller"
-                    ? "Bán chạy"
+                    ? "Bán chạy nhất"
                     : activeTab === "new"
-                        ? "Mới"
+                        ? "Mới nhất"
                         : "Giảm giá",
             clear: () => setActiveTab("all"),
         });
@@ -186,11 +113,11 @@ const MensLeather = () => {
     if (activeCategory !== "all") {
         activeFilters.push({
             label:
-                activeCategory === "stiletto"
-                    ? "Stiletto"
-                    : activeCategory === "block"
-                        ? "Gót vuông"
-                        : "Gót thấp",
+                activeCategory === "casual"
+                    ? "Dạo phố"
+                    : activeCategory === "formal"
+                        ? "Lịch sự"
+                        : "Bãi biển",
             clear: () => setActiveCategory("all"),
         });
     }
@@ -224,29 +151,40 @@ const MensLeather = () => {
 
         if (priceRange !== "all") {
             if (priceRange === "under1m") {
-                result = result.filter(
-                    (p) => parseInt(p.price.replace(/\D/g, "")) < 1000000
-                );
+                result = result.filter(p => p.price < 1000000);
             } else if (priceRange === "1m-2m") {
-                result = result.filter((p) => {
-                    const price = parseInt(p.price.replace(/\D/g, ""));
-                    return price >= 1000000 && price <= 2000000;
-                });
+                result = result.filter(p => p.price >= 1000000 && p.price <= 2000000);
             } else if (priceRange === "over2m") {
-                result = result.filter(
-                    (p) => parseInt(p.price.replace(/\D/g, "")) > 2000000
-                );
+                result = result.filter(p => p.price > 2000000);
             }
         }
 
         if (activeCategory !== "all") {
-            result = result.filter((p) => p.category === activeCategory);
+            if (activeCategory === "casual") {
+                result = result.filter(p => 
+                    p.category === "Casual" || 
+                    (p.subCategory && p.subCategory === "Casual") || 
+                    p.name.toLowerCase().includes("casual")
+                );
+            } else if (activeCategory === "formal") {
+                result = result.filter(p => 
+                    p.category === "Formal" || 
+                    (p.subCategory && p.subCategory === "Formal") || 
+                    p.name.toLowerCase().includes("formal")
+                );
+            } else if (activeCategory === "beach") {
+                result = result.filter(p => 
+                    p.category === "Beach" || 
+                    (p.subCategory && p.subCategory === "Beach") || 
+                    p.name.toLowerCase().includes("beach")
+                );
+            }
         }
 
         if (activeTab === "bestseller") {
-            result = result.filter((p) => p.bestSeller);
+            result = result.filter((p) => p.isFeatured);
         } else if (activeTab === "new") {
-            result = result.filter((p) => p.isNew);
+            result = result.filter((p) => p.isNewArrival);
         } else if (activeTab === "sale") {
             result = result.filter((p) => p.discount > 0);
         }
@@ -258,14 +196,12 @@ const MensLeather = () => {
         }
 
         if (ratingFilter > 0) {
-            result = result.filter((p) => parseFloat(p.rating) >= ratingFilter);
+            result = result.filter((p) => p.rating >= ratingFilter);
         }
 
         if (brandFilters.length > 0) {
             result = result.filter((p) => {
-                return brandFilters.some((brand) =>
-                    p.name.toLowerCase().includes(brand.toLowerCase())
-                );
+                return brandFilters.includes(p.brand);
             });
         }
 
@@ -280,7 +216,7 @@ const MensLeather = () => {
         brandFilters,
     ]);
 
-    const getBestSellers = () => products.filter((p) => p.bestSeller).slice(0, 4);
+    const getBestSellers = () => products.filter((p) => p.isFeatured).slice(0, 4);
 
     const brands = [
         {
@@ -301,34 +237,23 @@ const MensLeather = () => {
         },
     ];
 
-    const getNumericPrice = (priceStr) => {
-        if (typeof priceStr === "number") {
-            return priceStr;
-        }
-        return parseInt(String(priceStr).replace(/\D/g, "")) || 0;
-    };
-
     const calculateDiscountPrice = (price, discount) => {
         if (discount === 0) return price;
-        const numericPrice = getNumericPrice(price);
-        const discountAmount = numericPrice * (discount / 100);
-        const finalPrice = numericPrice - discountAmount;
-        return finalPrice.toLocaleString("vi-VN") + "đ";
+        const discountAmount = (price * discount) / 100;
+        return price - discountAmount;
     };
 
     return (
-        <div className="bg-gray-50">
-            {/* Hero Banner */}
+        <div className="bg-gray-50 min-h-screen">
             <HeroBanner 
                 imageUrl={heroImageUrl}
                 title="Giày Da Nam"
-                description="Khám phá bộ sưu tập giày da nam cao cấp, sang trọng và lịch lãm phù hợp với mọi dịp"
+                description="Khám phá bộ sưu tập giày da nam cao cấp, kết hợp hoàn hảo giữa phong cách và sự thoải mái"
                 buttonText="Khám Phá Ngay"
             />
 
             <div className="container mx-auto px-4 py-6">
                 <div className="flex flex-col md:flex-row gap-6">
-                    {/* Product Filter Sidebar */}
                     <div className="md:w-1/3 hidden md:block">
                         <ProductFilter 
                             products={products}
@@ -360,7 +285,6 @@ const MensLeather = () => {
                         />
                     </div>
 
-                    {/* Product Grid */}
                     <div className="md:w-2/3">
                         <ProductGrid 
                             products={filteredProducts}
@@ -377,47 +301,20 @@ const MensLeather = () => {
                     </div>
                 </div>
 
-                {/* Mobile filter overlay */}
-                <div className="fixed inset-0 filter-overlay z-50 transform translate-x-full transition-transform duration-300">
-                    <div
-                        className="absolute inset-0 bg-black bg-opacity-50"
-                        onClick={() =>
-                            document
-                                .querySelector(".filter-overlay")
-                                .classList.remove("active")
-                        }
-                    ></div>
-                    <div className="absolute right-0 top-0 bottom-0 w-4/5 max-w-md bg-white p-4 overflow-y-auto">
-                        <div className="flex justify-between items-center mb-4">
-                            <h3 className="font-bold text-lg">Lọc sản phẩm</h3>
-                            <button
-                                onClick={() =>
-                                    document
-                                        .querySelector(".filter-overlay")
-                                        .classList.remove("active")
-                                }
-                                className="p-2 rounded-full hover:bg-gray-100"
-                            >
-                                {/* FaTimes icon */}
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        </div>
-
-                        {/* Mobile filters content */}
-                        {/* ... */}
-                    </div>
+                <div className="fixed bottom-4 right-4 md:hidden z-50">
+                    <button className="bg-blue-600 text-white p-4 rounded-full shadow-lg flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                        </svg>
+                    </button>
                 </div>
 
-                {/* Related Products Section */}
                 <RelatedProducts 
                     products={getBestSellers()} 
                     title="Bạn Có Thể Thích" 
                     calculateDiscountPrice={calculateDiscountPrice} 
                 />
 
-                {/* Customer Reviews Section */}
                 <CustomerReviews reviews={reviews} />
             </div>
         </div>

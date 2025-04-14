@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-
-import productsData from "../Data/products.json";
-import "./styles/WomensHeels.css";
+import { productAPI, reviewAPI } from "../services/api";
+import '../App.css'; 
 
 // Import our reusable components
 import HeroBanner from "../components/ui/common/HeroBanner";
@@ -37,121 +35,46 @@ const WomensHeels = () => {
             try {
                 setLoading(true);
 
-                const womenHeels = productsData.filter(
+                // Lấy tất cả sản phẩm từ API
+                const productsData = await productAPI.getAllProducts();
+                
+                // Lọc ra giày cao gót nữ
+                // Các sản phẩm cao gót thường có category là "Heels" hoặc bất kỳ danh mục nào chứa từ "heel"
+                const womensHeels = productsData.filter(
                     (product) =>
-                        product.gender === "Nữ" &&
-                        ((product.category &&
-                            product.category.toLowerCase().includes("heel")) ||
-                            (product.type && product.type.toLowerCase().includes("heel")) ||
-                            (product.tags &&
-                                Array.isArray(product.tags) &&
-                                product.tags.some(
-                                    (tag) =>
-                                        typeof tag === "string" &&
-                                        tag.toLowerCase().includes("heel")
-                                )))
+                        product.gender === "Nữ" && product.category === "Giày cao gót" 
                 );
 
+                // Nếu không có sản phẩm giày cao gót nữ, sử dụng sản phẩm nữ khác
                 const productsToUse =
-                    womenHeels.length > 0
-                        ? womenHeels
-                        : productsData
-                            .filter((product) => product.gender === "Nữ")
-                            .slice(0, 30);
-
+                    womensHeels.length > 0
+                        ? womensHeels
+                        : productsData.filter((product) => product.gender === "Nữ").slice(0, 30);
+                
+                // Lấy đánh giá từ API
                 try {
-                    const reviewResponse = await axios.get(
-                        "https://67dbd6fd1fd9e43fe476247e.mockapi.io/reviews"
-                    );
-                    const reviewData = reviewResponse.data;
-
-                    let reviewsToUse = Array.isArray(reviewData)
-                        ? reviewData
-                        : reviewData.reviews || reviewData.items || [];
-
-                    setReviews(reviewsToUse.slice(0, 6));
+                    const reviewsData = await reviewAPI.getAllReviews();
+                    
+                    // Lọc các đánh giá liên quan đến sản phẩm hiển thị
+                    const productIds = productsToUse.map(p => p.id.toString());
+                    const relevantReviews = reviewsData.filter(r => 
+                        productIds.includes(r.idProduct)
+                    ).slice(0, 6);
+                    
+                    setReviews(relevantReviews);
                 } catch (reviewError) {
                     console.error("Error loading reviews:", reviewError);
-                    setReviews([
-                        {
-                            name: "Nguyễn Thị Hương",
-                            location: "Hà Nội",
-                            image:
-                                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-                            rating: 5,
-                            text: "Tôi đã mua đôi giày cao gót từ cửa hàng này và rất hài lòng. Thiết kế đẹp mắt, thoải mái khi đi và đặc biệt phù hợp với nhiều trang phục khác nhau.",
-                        },
-                    ]);
+                    setReviews([]);
                 }
 
-                const enhancedData = productsToUse.map((product) => ({
-                    ...product,
-                    price:
-                        typeof product.price === "number"
-                            ? `${product.price.toLocaleString("vi-VN")}đ`
-                            : product.price,
-                    image:
-                        product.images && product.images.length > 0
-                            ? product.images[0]
-                            : product.image ||
-                            "https://via.placeholder.com/400x500?text=No+Image",
-                    isNew: product.isNewArrival || product.isNew || false,
-                    bestSeller: product.isFeatured || product.bestSeller || false,
-                    color:
-                        product.colors && product.colors.length > 0
-                            ? product.colors[0]
-                            : product.color || "Đen",
-                    category:
-                        product.type ||
-                        ["stiletto", "block", "kitten"][Math.floor(Math.random() * 3)],
-                    discount:
-                        product.discount ||
-                        (Math.random() > 0.8 ? Math.floor(Math.random() * 20 + 10) : 0),
-                    rating: product.rating || (Math.random() * 2 + 3).toFixed(1),
-                    name: product.name.includes("Heel")
-                        ? product.name
-                        : product.name
-                            .replace("Running", "Stiletto")
-                            .replace("Shoe", "Heel"),
-                }));
-
-                setProducts(enhancedData);
-                setFilteredProducts(enhancedData);
+                setProducts(productsToUse);
+                setFilteredProducts(productsToUse);
                 setLoading(false);
             } catch (error) {
                 console.error("Error loading data:", error);
-
-                const fallbackProducts = [
-                    {
-                        id: 1,
-                        name: "Steve Madden Vala",
-                        price: "1.890.000đ",
-                        image:
-                            "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80",
-                        rating: "4.5",
-                        category: "stiletto",
-                        isNew: true,
-                        discount: 0,
-                        bestSeller: true,
-                        color: "Đen",
-                    },
-                ];
-
-                const fallbackReviews = [
-                    {
-                        name: "Nguyễn Thị Hương",
-                        location: "Hà Nội",
-                        image:
-                            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80",
-                        rating: 5,
-                        text: "Tôi đã mua đôi giày cao gót từ cửa hàng này và rất hài lòng. Thiết kế đẹp mắt, thoải mái khi đi và đặc biệt phù hợp với nhiều trang phục khác nhau.",
-                    },
-                ];
-
-                setProducts(fallbackProducts);
-                setFilteredProducts(fallbackProducts);
-                setReviews(fallbackReviews);
                 setLoading(false);
+                setProducts([]);
+                setFilteredProducts([]);
             }
         };
 
@@ -175,15 +98,14 @@ const WomensHeels = () => {
         setBrandFilters([]);
     };
 
-    // Prepare active filters
     const activeFilters = [];
     if (activeTab !== "all") {
         activeFilters.push({
             label:
                 activeTab === "bestseller"
-                    ? "Bán chạy"
+                    ? "Bán chạy nhất"
                     : activeTab === "new"
-                        ? "Mới"
+                        ? "Mới nhất"
                         : "Giảm giá",
             clear: () => setActiveTab("all"),
         });
@@ -229,29 +151,40 @@ const WomensHeels = () => {
 
         if (priceRange !== "all") {
             if (priceRange === "under1m") {
-                result = result.filter(
-                    (p) => parseInt(p.price.replace(/\D/g, "")) < 1000000
-                );
+                result = result.filter(p => p.price < 1000000);
             } else if (priceRange === "1m-2m") {
-                result = result.filter((p) => {
-                    const price = parseInt(p.price.replace(/\D/g, ""));
-                    return price >= 1000000 && price <= 2000000;
-                });
+                result = result.filter(p => p.price >= 1000000 && p.price <= 2000000);
             } else if (priceRange === "over2m") {
-                result = result.filter(
-                    (p) => parseInt(p.price.replace(/\D/g, "")) > 2000000
-                );
+                result = result.filter(p => p.price > 2000000);
             }
         }
 
         if (activeCategory !== "all") {
-            result = result.filter((p) => p.category === activeCategory);
+            if (activeCategory === "stiletto") {
+                result = result.filter(p => 
+                    p.category === "Stiletto" || 
+                    (p.subCategory && p.subCategory === "Stiletto") || 
+                    p.name.toLowerCase().includes("stiletto")
+                );
+            } else if (activeCategory === "block") {
+                result = result.filter(p => 
+                    p.category === "Block" || 
+                    (p.subCategory && p.subCategory === "Block") || 
+                    p.name.toLowerCase().includes("block")
+                );
+            } else if (activeCategory === "kitten") {
+                result = result.filter(p => 
+                    p.category === "Kitten" || 
+                    (p.subCategory && p.subCategory === "Kitten") || 
+                    p.name.toLowerCase().includes("kitten")
+                );
+            }
         }
 
         if (activeTab === "bestseller") {
-            result = result.filter((p) => p.bestSeller);
+            result = result.filter((p) => p.isFeatured);
         } else if (activeTab === "new") {
-            result = result.filter((p) => p.isNew);
+            result = result.filter((p) => p.isNewArrival);
         } else if (activeTab === "sale") {
             result = result.filter((p) => p.discount > 0);
         }
@@ -263,14 +196,12 @@ const WomensHeels = () => {
         }
 
         if (ratingFilter > 0) {
-            result = result.filter((p) => parseFloat(p.rating) >= ratingFilter);
+            result = result.filter((p) => p.rating >= ratingFilter);
         }
 
         if (brandFilters.length > 0) {
             result = result.filter((p) => {
-                return brandFilters.some((brand) =>
-                    p.name.toLowerCase().includes(brand.toLowerCase())
-                );
+                return brandFilters.includes(p.brand);
             });
         }
 
@@ -285,19 +216,41 @@ const WomensHeels = () => {
         brandFilters,
     ]);
 
-    const getStilettoHeels = () =>
-        products.filter((p) => p.category === "stiletto").slice(0, 4);
-    const getBlockHeels = () =>
-        products.filter((p) => p.category === "block").slice(0, 4);
-    const getKittenHeels = () =>
-        products.filter((p) => p.category === "kitten").slice(0, 4);
-    const getNewestArrivals = () => products.filter((p) => p.isNew).slice(0, 4);
-    const getBestSellers = () => products.filter((p) => p.bestSeller).slice(0, 4);
+    // eslint-disable-next-line no-unused-vars
+    const getStilettoHeels = () => products.filter((p) => 
+        p.category === "Stiletto" || 
+        p.name.toLowerCase().includes("stiletto")
+    ).slice(0, 4);
+    
+    // eslint-disable-next-line no-unused-vars
+    const getBlockHeels = () => products.filter((p) => 
+        p.category === "Block" || 
+        p.name.toLowerCase().includes("block")
+    ).slice(0, 4);
+    
+    // eslint-disable-next-line no-unused-vars
+    const getKittenHeels = () => products.filter((p) => 
+        p.category === "Kitten" || 
+        p.name.toLowerCase().includes("kitten")
+    ).slice(0, 4);
+    
+    // eslint-disable-next-line no-unused-vars
+    const getNewestArrivals = () => products.filter((p) => p.isNewArrival).slice(0, 4);
+    
+    const getBestSellers = () => products.filter((p) => p.isFeatured).slice(0, 4);
+    
+    // eslint-disable-next-line no-unused-vars
     const getDiscountedProducts = () =>
         products
             .filter((p) => p.discount > 0)
             .sort((a, b) => b.discount - a.discount)
             .slice(0, 4);
+
+    const calculateDiscountPrice = (price, discount) => {
+        if (discount === 0) return price;
+        const discountAmount = (price * discount) / 100;
+        return price - discountAmount;
+    };
 
     const brands = [
         {
@@ -306,46 +259,29 @@ const WomensHeels = () => {
         },
         {
             name: "Jimmy Choo",
-            logo: "https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
-        },
-        {
-            name: "Manolo Blahnik",
             logo: "https://images.unsplash.com/photo-1518049362265-d5b2a6467637?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
         },
         {
-            name: "Steve Madden",
-            logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6mZKV3IQcBSzFkNB9FYf5F4RM4yeNHxaEyRMsy9J7kpNyqp492IM6FTvkgIrD8PdBd90&usqp=CAU",
+            name: "Manolo Blahnik",
+            logo: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
+        },
+        {
+            name: "Stuart Weitzman",
+            logo: "https://images.unsplash.com/photo-1520256862855-398228c41684?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
         },
     ];
 
-    const getNumericPrice = (priceStr) => {
-        if (typeof priceStr === "number") {
-            return priceStr;
-        }
-        return parseInt(String(priceStr).replace(/\D/g, "")) || 0;
-    };
-
-    const calculateDiscountPrice = (price, discount) => {
-        if (discount === 0) return price;
-        const numericPrice = getNumericPrice(price);
-        const discountAmount = numericPrice * (discount / 100);
-        const finalPrice = numericPrice - discountAmount;
-        return finalPrice.toLocaleString("vi-VN") + "đ";
-    };
-
     return (
-        <div className="bg-gray-50">
-            {/* Hero Banner */}
+        <div className="bg-gray-50 min-h-screen">
             <HeroBanner 
                 imageUrl={heroImageUrl}
                 title="Giày Cao Gót Nữ"
-                description="Khám phá bộ sưu tập giày cao gót nữ cao cấp, tôn dáng và tạo nên vẻ sang trọng cho mọi bước chân"
+                description="Khám phá bộ sưu tập giày cao gót cao cấp, tôn dáng và tạo nên vẻ sang trọng cho mọi bước chân"
                 buttonText="Khám Phá Ngay"
             />
 
             <div className="container mx-auto px-4 py-6">
                 <div className="flex flex-col md:flex-row gap-6">
-                    {/* Product Filter Sidebar */}
                     <div className="md:w-1/3 hidden md:block">
                         <ProductFilter 
                             products={products}
@@ -377,7 +313,6 @@ const WomensHeels = () => {
                         />
                     </div>
 
-                    {/* Product Grid */}
                     <div className="md:w-2/3">
                         <ProductGrid 
                             products={filteredProducts}
@@ -394,47 +329,33 @@ const WomensHeels = () => {
                     </div>
                 </div>
 
-                {/* Mobile filter overlay */}
-                <div className="fixed inset-0 filter-overlay z-50 transform translate-x-full transition-transform duration-300">
-                    <div
-                        className="absolute inset-0 bg-black bg-opacity-50"
-                        onClick={() =>
-                            document
-                                .querySelector(".filter-overlay")
-                                .classList.remove("active")
-                        }
-                    ></div>
-                    <div className="absolute right-0 top-0 bottom-0 w-4/5 max-w-md bg-white p-4 overflow-y-auto">
+                <div className="fixed bottom-4 right-4 md:hidden z-50">
+                    <button className="bg-blue-600 text-white p-4 rounded-full shadow-lg flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+                    <div className="bg-white h-full w-4/5 max-w-sm p-4 ml-auto">
                         <div className="flex justify-between items-center mb-4">
-                            <h3 className="font-bold text-lg">Lọc sản phẩm</h3>
-                            <button
-                                onClick={() =>
-                                    document
-                                        .querySelector(".filter-overlay")
-                                        .classList.remove("active")
-                                }
-                                className="p-2 rounded-full hover:bg-gray-100"
-                            >
-                                {/* FaTimes icon */}
+                            <h3 className="text-lg font-bold">Bộ lọc</h3>
+                            <button className="text-gray-500 hover:text-gray-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
                         </div>
-
-                        {/* Mobile filters content */}
-                        {/* ... */}
                     </div>
                 </div>
 
-                {/* Related Products Section */}
                 <RelatedProducts 
                     products={getBestSellers()} 
                     title="Bạn Có Thể Thích" 
                     calculateDiscountPrice={calculateDiscountPrice} 
                 />
 
-                {/* Customer Reviews Section */}
                 <CustomerReviews reviews={reviews} />
             </div>
         </div>

@@ -43,6 +43,22 @@ const ProductCard = ({ product }) => {
         : "Bãi biển";
   };
 
+  // Xác định hình ảnh để hiển thị từ dữ liệu sản phẩm
+  const getProductImage = () => {
+    // Nếu có mảng images, sử dụng ảnh đầu tiên
+    if (product.images && product.images.length > 0) {
+      return product.images[0];
+    } 
+    // Nếu có trường image, sử dụng trường đó
+    else if (product.image) {
+      return product.image;
+    } 
+    // Mặc định sử dụng hình ảnh placeholder
+    else {
+      return "https://via.placeholder.com/400x500?text=No+Image";
+    }
+  };
+
   return (
     <div className="product-card bg-white rounded-xl shadow-sm h-full overflow-hidden group">
       <div
@@ -68,9 +84,12 @@ const ProductCard = ({ product }) => {
         )}
 
         <img
-          src={product.image}
+          src={getProductImage()}
           className="product-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           alt={product.name}
+          onError={(e) => {
+            e.target.src = "https://via.placeholder.com/400x500?text=No+Image";
+          }}
         />
       </div>
 
@@ -136,7 +155,8 @@ ProductCard.propTypes = {
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    image: PropTypes.string.isRequired,
+    image: PropTypes.string,
+    images: PropTypes.array,
     rating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     category: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,

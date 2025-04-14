@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "react-bootstrap";
 import ReactPaginate from 'react-paginate';
 import { Link } from "react-router-dom";
-import productsData from "../../../Data/products.json";
+import { productAPI } from "../../../services/api";
 
 // Hàm định dạng tiền tệ Việt Nam
 const formatCurrency = (price) => {
@@ -10,19 +10,46 @@ const formatCurrency = (price) => {
         style: 'currency',
         currency: 'VND',
         maximumFractionDigits: 0
-    }).format(price); // Quy đổi từ USD sang VND với tỷ giá ước tính
+    }).format(price);
 };
 
 const AllProducts = () => {
     const [category, setCategory] = useState('Tất cả danh mục');
     const [brand, setBrand] = useState('Lọc theo hãng');
     const [sortBy, setSortBy] = useState('Lọc theo giá');
-
     const [itemOffset, setItemOffset] = useState(0);
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [brands, setBrands] = useState([]);
     const itemsPerPage = 8;
 
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                setLoading(true);
+                const data = await productAPI.getAllProducts();
+                
+                setProducts(data);
+                
+                // Lấy danh sách danh mục và thương hiệu độc nhất
+                const uniqueCategories = [...new Set(data.map(product => product.category))];
+                setCategories(uniqueCategories);
+                
+                const uniqueBrands = [...new Set(data.map(product => product.brand))];
+                setBrands(uniqueBrands);
+            } catch (error) {
+                console.error('Lỗi khi lấy sản phẩm:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        
+        fetchProducts();
+    }, []);
+
     // --- FILTER + SORT ---
-    const filteredProducts = productsData
+    const filteredProducts = products
         .filter((product) => {
             let categoryMatch = category === 'Tất cả danh mục' || product.category === category;
             let brandMatch = brand === 'Lọc theo hãng' || product.brand === brand;
@@ -31,11 +58,10 @@ const AllProducts = () => {
         .sort((a, b) => {
             if (sortBy === 'Low to High') return a.price - b.price;
             if (sortBy === 'High to Low') return b.price - a.price;
-            if (sortBy === 'Newest First') return new Date(b.date) - new Date(a.date);
-            if (sortBy === 'Popular') return b.popularity - a.popularity;
+            if (sortBy === 'Newest First') return new Date(b.createdAt || Date.now()) - new Date(a.createdAt || Date.now());
+            if (sortBy === 'Popular') return (b.rating || 0) - (a.rating || 0);
             return 0;
         });
-
 
     const endOffset = itemOffset + itemsPerPage;
     const currentItems = filteredProducts.slice(itemOffset, endOffset);
@@ -64,10 +90,9 @@ const AllProducts = () => {
                             }}
                         >
                             <option>Tất cả danh mục</option>
-                            <option>Sandal</option>
-                            <option>Giày cao gót</option>
-                            <option>Giày thể thao</option>
-                            <option>Giày Tây</option>
+                            {categories.map((cat, index) => (
+                                <option key={index}>{cat}</option>
+                            ))}
                         </select>
                     </div>
 
@@ -82,12 +107,9 @@ const AllProducts = () => {
                             }}
                         >
                             <option>Lọc theo hãng</option>
-                            <option>Nike</option>
-                            <option>Adidas</option>
-                            <option>Puma</option>
-                            <option>New Balance</option>
-                            <option>Vans</option>
-                            <option>Converse</option>
+                            {brands.map((brandName, index) => (
+                                <option key={index}>{brandName}</option>
+                            ))}
                         </select>
                     </div>
 
@@ -111,62 +133,100 @@ const AllProducts = () => {
                 </div>
 
                 {/* Products Grid */}
-                <div className="row g-4">
-                    {currentItems.map((product) => (
-                        <div key={product.id} className="col-md-3">
-                            <Link to={`/product/${product.id}`} className="text-decoration-none text-dark">
+                {loading ? (
+                    <div className="row g-4">
+                        {[...Array(8)].map((_, index) => (
+                            <div key={index} className="col-md-3">
                                 <div className="card h-100 shadow-sm product-card position-relative">
-                                    {product.isNew && (
-                                        <span className="badge bg-warning text-dark position-absolute top-0 start-0 m-2">
-                                            NEW
-                                        </span>
-                                    )}
-                                    <img
-                                        src={product.images[0]}
-                                        alt={product.name}
-                                        className="card-img-top"
-                                    />
+                                    <div className="placeholder-glow" style={{ height: '200px' }}></div>
                                     <div className="card-body d-flex flex-column justify-content-between">
                                         <div>
-                                            <h5 className="card-title">{product.name}</h5>
-                                            <p className="text-muted">{product.category}</p>
+                                            <div className="placeholder col-7 mb-2"></div>
+                                            <div className="placeholder col-5"></div>
                                         </div>
                                         <div className="d-flex justify-content-between align-items-center mt-3">
-                                            {/* Định dạng giá theo tiền VND */}
-                                            <h5 className="text-danger fw-bold">{formatCurrency(product.price)}</h5>
-                                            <Button as={Link} to={`/product/${product.id}`}
-                                                className="btn btn-dark btn-sm d-flex align-items-center"
-                                            >
-                                                Xem thêm
-                                            </Button>
+                                            <div className="placeholder col-4"></div>
+                                            <div className="placeholder col-3"></div>
                                         </div>
                                     </div>
                                 </div>
-                            </Link>
-                        </div>
-                    ))}
-                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : currentItems.length === 0 ? (
+                    <div className="text-center py-5">
+                        <p className="text-lg text-gray-600">Không tìm thấy sản phẩm nào phù hợp với điều kiện lọc.</p>
+                        <button 
+                            className="btn btn-outline-primary mt-3"
+                            onClick={() => {
+                                setCategory('Tất cả danh mục');
+                                setBrand('Lọc theo hãng');
+                                setSortBy('Lọc theo giá');
+                            }}
+                        >
+                            Xóa bộ lọc
+                        </button>
+                    </div>
+                ) : (
+                    <div className="row g-4">
+                        {currentItems.map((product) => (
+                            <div key={product.id} className="col-md-3">
+                                <Link to={`/product/${product.id}`} className="text-decoration-none text-dark">
+                                    <div className="card h-100 shadow-sm product-card position-relative">
+                                        {product.isNewArrival && (
+                                            <span className="badge bg-warning text-dark position-absolute top-0 start-0 m-2">
+                                                NEW
+                                            </span>
+                                        )}
+                                        <img
+                                            src={product.images[0]}
+                                            alt={product.name}
+                                            className="card-img-top"
+                                        />
+                                        <div className="card-body d-flex flex-column justify-content-between">
+                                            <div>
+                                                <h5 className="card-title">{product.name}</h5>
+                                                <p className="text-muted">{product.category}</p>
+                                            </div>
+                                            <div className="d-flex justify-content-between align-items-center mt-3">
+                                                {/* Định dạng giá theo tiền VND */}
+                                                <h5 className="text-danger fw-bold">{formatCurrency(product.price)}</h5>
+                                                <Button as={Link} to={`/product/${product.id}`}
+                                                    className="btn btn-dark btn-sm d-flex align-items-center"
+                                                >
+                                                    Xem thêm
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                )}
 
                 {/* Pagination */}
-                <div className="mt-8 pt-3">
-                    <ReactPaginate
-                        breakLabel="..."
-                        nextLabel="Next >"
-                        onPageChange={handlePageClick}
-                        pageRangeDisplayed={5}
-                        pageCount={pageCount}
-                        previousLabel="< Prev"
-                        renderOnZeroPageCount={null}
-                        containerClassName="pagination justify-content-center"
-                        pageClassName="page-item"
-                        pageLinkClassName="page-link"
-                        previousClassName="page-item"
-                        previousLinkClassName="page-link"
-                        nextClassName="page-item"
-                        nextLinkClassName="page-link"
-                        activeClassName="active"
-                    />
-                </div>
+                {!loading && pageCount > 1 && (
+                    <div className="mt-8 pt-3">
+                        <ReactPaginate
+                            breakLabel="..."
+                            nextLabel="Next >"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={5}
+                            pageCount={pageCount}
+                            previousLabel="< Prev"
+                            renderOnZeroPageCount={null}
+                            containerClassName="pagination justify-content-center"
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            activeClassName="active"
+                        />
+                    </div>
+                )}
             </div>
         </section>
     );
