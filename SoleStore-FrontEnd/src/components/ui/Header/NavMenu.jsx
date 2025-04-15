@@ -6,37 +6,37 @@ const NavMenu = () => {
         <Nav className="mx-auto align-items-center">
             {/* Home */}
             <Nav.Link as={Link} to="/" className="nav-link-custom mx-1">
-                Home
+                Trang chủ
             </Nav.Link>
 
             {/* Men's Shoes Dropdown */}
             <NavDropdown 
-                title="Men's Shoes" 
+                title="Giày nam" 
                 id="men-dropdown" 
                 className="nav-dropdown-custom mx-1"
             >
-                <NavDropdown.Item as={Link} to="/mens-sports" className="dropdown-item-custom">Men's Sports</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/mens-sandals" className="dropdown-item-custom">Men's Sandals</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/mens-leather" className="dropdown-item-custom">Men's Leather</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/mens-sports" className="dropdown-item-custom">Giày thể thao nam</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/mens-sandals" className="dropdown-item-custom">Sandals nam</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/mens-leather" className="dropdown-item-custom">Giày da nam</NavDropdown.Item>
             </NavDropdown>
 
             {/* Women's Shoes Dropdown */}
             <NavDropdown 
-                title="Women's Shoes" 
+                title="Giày nữ" 
                 id="women-dropdown" 
                 className="nav-dropdown-custom mx-1"
             >
-                <NavDropdown.Item as={Link} to="/womens-sports" className="dropdown-item-custom">Women's Sports</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/womens-sandals" className="dropdown-item-custom">Women's Sandals</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/womens-heels" className="dropdown-item-custom">Women's Heels</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/womens-sports" className="dropdown-item-custom">Giày thể thao nư</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/womens-sandals" className="dropdown-item-custom">Sandals nữ</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/womens-heels" className="dropdown-item-custom">Giày cao gót nữ</NavDropdown.Item>
             </NavDropdown>
 
             <Nav.Link as={Link} to="/blogs" className="nav-link-custom mx-1">
-                Blog
+                Tin tức
             </Nav.Link>
 
             <Nav.Link as={Link} to="/contact" className="nav-link-custom mx-1">
-                Contact
+                Liên hệ
             </Nav.Link>
 
             <style>{`

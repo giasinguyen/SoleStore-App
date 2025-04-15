@@ -12,7 +12,7 @@ const Logo = () => {
                     className="logo-image"
                 />
             </div>
-            <span className="brand-text">SoleStyle<span className="text-amber-400">VN</span></span>
+            <span className="brand-text">SoleStore<span className="text-amber-400">VN</span></span>
 
             <style>{`
                 .logo-container {
