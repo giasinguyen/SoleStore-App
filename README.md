@@ -1,82 +1,120 @@
-# SoleStore - Cửa hàng Giày Trực tuyến
+# SoleStore - Nền tảng thương mại điện tử chuyên về giày dép
 
-![SoleStore Logo](SoleStore-FrontEnd/src/assets/images/logo.png)
+<p align="center">
+  <img src="SoleStore-FrontEnd/src/assets/images/logo.png" alt="SoleStore Logo" width="200"/>
+</p>
+
+<p align="center">
+  <a href="#tổng-quan">Tổng quan</a> •
+  <a href="#tính-năng-chính">Tính năng chính</a> •
+  <a href="#công-nghệ-sử-dụng">Công nghệ sử dụng</a> •
+  <a href="#cấu-trúc-dự-án">Cấu trúc dự án</a> •
+  <a href="#hướng-dẫn-cài-đặt">Hướng dẫn cài đặt</a> •
+  <a href="#demo">Demo</a> •
+</p>
 
 ## Tổng quan
 
-SoleStore là một nền tảng thương mại điện tử hiện đại dành cho việc bán giày dép trực tuyến. Dự án được phát triển với kiến trúc chia thành Frontend và Backend riêng biệt, sử dụng các công nghệ tiên tiến để mang lại trải nghiệm người dùng tối ưu và hiệu suất cao.
+**SoleStore** là một ứng dụng web thương mại điện tử hiện đại chuyên về bán giày dép trực tuyến. Dự án được thiết kế với kiến trúc phân tách rõ ràng giữa Frontend và Backend, giúp việc phát triển và bảo trì trở nên dễ dàng hơn.
+
+Với giao diện người dùng thân thiện và trải nghiệm mượt mà, SoleStore mang đến cho khách hàng một nền tảng mua sắm trực tuyến tiện lợi, đồng thời cung cấp công cụ quản lý hiệu quả cho người quản trị.
 
 ## Tính năng chính
 
-### Khách hàng
-- Duyệt sản phẩm với nhiều bộ lọc (theo loại, giá, thương hiệu, v.v.)
-- Hỗ trợ tìm kiếm sản phẩm
-- Xem chi tiết sản phẩm và đánh giá
-- Giỏ hàng và thanh toán
-- Đăng ký và quản lý tài khoản
-- Xem lịch sử đơn hàng
+### Dành cho khách hàng
+- **Duyệt và tìm kiếm sản phẩm**
+  - Bộ lọc đa tiêu chí (loại giày, giá, thương hiệu, màu sắc, đánh giá)
+  - Tìm kiếm theo từ khóa
+  - Sắp xếp sản phẩm (mới nhất, giá tăng/giảm, phổ biến nhất)
 
-### Quản trị viên
-- Quản lý sản phẩm (thêm, sửa, xóa)
-- Quản lý đơn hàng
-- Quản lý nhân viên
-- Thống kê và phân tích bán hàng
-- Quản lý danh mục sản phẩm
+- **Quản lý giỏ hàng**
+  - Thêm/xóa sản phẩm
+  - Cập nhật số lượng
+  - Lưu giỏ hàng tự động
+
+- **Trang chi tiết sản phẩm**
+  - Hình ảnh chất lượng cao với gallery
+  - Thông tin chi tiết sản phẩm
+  - Đánh giá và bình luận
+  - Gợi ý sản phẩm tương tự
+
+- **Thanh toán**
+  - Quy trình thanh toán đơn giản
+  - Nhiều phương thức thanh toán
+  - Lưu thông tin giao hàng
+
+- **Tài khoản người dùng**
+  - Đăng ký/đăng nhập
+  - Lịch sử đơn hàng
+  - Quản lý thông tin cá nhân
+  - Danh sách yêu thích
+
+### Dành cho quản trị viên
+- **Quản lý sản phẩm**
+- **Quản lý đơn hàng**
+- **Quản lý người dùng**
+- **Thống kê và báo cáo**
+- **Quản lý blog và nội dung**
 
 ## Công nghệ sử dụng
 
 ### Frontend
-- React.js
-- Vite (công cụ build)
-- Tailwind CSS
-- React Router
-- Context API (quản lý trạng thái)
-- React Bootstrap
-- Axios (gọi API)
+- **[React.js](https://reactjs.org/)** - Thư viện JavaScript để xây dựng giao diện người dùng
+- **[Vite](https://vitejs.dev/)** - Công cụ build nhanh cho ứng dụng web hiện đại
+- **[Tailwind CSS](https://tailwindcss.com/)** - Framework CSS tiện dụng với các tiện ích
+- **[React Router](https://reactrouter.com/)** - Định tuyến cho ứng dụng React
+- **[Context API](https://reactjs.org/docs/context.html)** - Quản lý trạng thái ứng dụng
+- **[React Bootstrap](https://react-bootstrap.github.io/)** - Tích hợp Bootstrap với React
+- **[Framer Motion](https://www.framer.com/motion/)** - Thư viện animation cho React
+- **[Axios](https://axios-http.com/)** - Thư viện HTTP client để gọi API
 
 ### Backend
-- Node.js
-- Express.js
-- MongoDB (cơ sở dữ liệu)
-- JWT (xác thực người dùng)
-- Middleware xác thực và phân quyền
+- **[Node.js](https://nodejs.org/)** - Môi trường runtime JavaScript
+- **[Express.js](https://expressjs.com/)** - Framework web cho Node.js
+- **[MongoDB](https://www.mongodb.com/)** - Cơ sở dữ liệu NoSQL
+- **[Mongoose](https://mongoosejs.com/)** - ODM cho MongoDB và Node.js
+- **[JSON Web Token (JWT)](https://jwt.io/)** - Xác thực và phân quyền người dùng
+- **[Multer](https://github.com/expressjs/multer)** - Middleware xử lý upload file
+- **[Cors](https://github.com/expressjs/cors)** - Middleware CORS cho Express
 
 ## Cấu trúc dự án
 
 ```
 SoleStore-App/
-├── README.md
-├── SoleStore-Backend/       # Backend API và server
-│   ├── src/
-│   │   ├── controllers/     # Xử lý logic từ routes
-│   │   ├── models/          # Mô hình dữ liệu
-│   │   ├── routes/          # Định nghĩa API endpoints
-│   │   ├── middleware/      # Middleware xác thực và xử lý yêu cầu
-│   │   ├── config/          # Cấu hình ứng dụng và database
-│   │   ├── utils/           # Tiện ích chung
-│   │   └── Server.js        # Điểm khởi đầu ứng dụng
-│   └── package.json
-│
-└── SoleStore-FrontEnd/      # Frontend React app
+├── README.md                          # Tài liệu dự án
+├── SoleStore-Backend/                 # Backend API
+│   ├── index.js                       # Entry point
+│   ├── package.json                   # Dependencies
+│   ├── config/                        # Cấu hình ứng dụng
+│   ├── controller/                    # Business logic
+│   ├── models/                        # Database models
+│   ├── routers/                       # API routes
+│   ├── helpers/                       # Helper functions
+│   └── public/                        # Static assets
+└── SoleStore-FrontEnd/                # React Frontend
     ├── src/
-    │   ├── components/      # Components tái sử dụng
-    │   ├── pages/           # Các trang trong ứng dụng
-    │   ├── context/         # Context API
-    │   ├── assets/          # Hình ảnh và tài nguyên tĩnh
-    │   └── Data/            # Dữ liệu mẫu (JSON)
-    └── package.json
+    │   ├── App.jsx                    # Main App component
+    │   ├── components/                # Reusable components
+    │   ├── pages/                     # Page components
+    │   ├── context/                   # React Context
+    │   ├── services/                  # API services
+    │   ├── assets/                    # Static assets
+    │   └── Data/                      # Mock data
+    ├── index.html                     # HTML template
+    ├── package.json                   # Dependencies
+    └── vite.config.js                 # Vite configuration
 ```
 
 ## Hướng dẫn cài đặt
 
 ### Yêu cầu hệ thống
-- Node.js (v14 trở lên)
-- npm hoặc yarn
-- MongoDB
+- **Node.js** (v14+)
+- **npm** hoặc **yarn**
+- **MongoDB** (local hoặc MongoDB Atlas)
 
 ### Bước 1: Clone dự án
 ```bash
-git clone https://github.com/your-username/SoleStore-App.git
+git clone https://github.com/giasinguyen/SoleStore-App.git
 cd SoleStore-App
 ```
 
@@ -84,6 +122,11 @@ cd SoleStore-App
 ```bash
 cd SoleStore-Backend
 npm install
+
+# Tạo file .env với nội dung:
+# PORT=5000
+# MONGODB_URI=mongodb://localhost:27017/solestore
+# JWT_SECRET=your_secret_key
 ```
 
 ### Bước 3: Cài đặt Frontend
@@ -92,46 +135,24 @@ cd ../SoleStore-FrontEnd
 npm install
 ```
 
-### Bước 4: Cấu hình môi trường
-Tạo file `.env` trong thư mục `SoleStore-Backend` với nội dung:
-```
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/solestore
-JWT_SECRET=your_jwt_secret_key
-```
-
-### Bước 5: Chạy ứng dụng
-
-#### Backend:
+### Bước 4: Khởi chạy ứng dụng
+Trong một terminal:
 ```bash
-cd SoleStore-Backend
+# Từ thư mục SoleStore-Backend
+npm start
+```
+
+Trong terminal khác:
+```bash
+# Từ thư mục SoleStore-FrontEnd
 npm run dev
 ```
 
-#### Frontend:
-```bash
-cd SoleStore-FrontEnd
-npm run dev
-```
-
-## Triển khai
-
-### Frontend
-Frontend có thể được triển khai trên Netlify, Vercel hoặc các dịch vụ lưu trữ tĩnh khác.
-
-### Backend
-Backend có thể được triển khai trên Heroku, AWS, DigitalOcean hoặc các dịch vụ đám mây khác.
-
-## Đóng góp
-1. Fork dự án
-2. Tạo nhánh tính năng (`git checkout -b feature/amazing-feature`)
-3. Commit thay đổi của bạn (`git commit -m 'Add some amazing feature'`)
-4. Push lên nhánh (`git push origin feature/amazing-feature`)
-5. Mở Pull Request
+Sau đó truy cập:
+- Frontend: http://localhost:5111
+- Backend API: http://localhost:3000
 
 ## Giấy phép
-Phân phối theo giấy phép MIT. Xem `LICENSE` để biết thêm thông tin.
 
-## Liên hệ
-- Email: example@solestore.com
-- Website: www.solestore.com
+Dự án này được phân phối dưới giấy phép MIT. Xem thêm [LICENSE](LICENSE) để biết chi tiết.
+

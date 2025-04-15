@@ -27,8 +27,14 @@ const ProductCard = ({ product }) => {
     );
   };
 
+  // Định dạng giá thông thường
+  const formatPrice = (price) => {
+    const numericPrice = getNumericPrice(price);
+    return numericPrice.toLocaleString("vi-VN") + "đ";
+  };
+
   const calculateDiscountPrice = (price, discount) => {
-    if (discount === 0) return price;
+    if (discount === 0) return formatPrice(price);
     const numericPrice = getNumericPrice(price);
     const discountAmount = numericPrice * (discount / 100);
     const finalPrice = numericPrice - discountAmount;
@@ -128,13 +134,13 @@ const ProductCard = ({ product }) => {
         <div className="flex justify-center items-center mb-3">
           {product.discount > 0 ? (
             <>
-              <p className="text-gray-400 line-through mr-2">{product.price}</p>
+              <p className="text-gray-400 line-through mr-2">{formatPrice(product.price)}</p>
               <p className="text-blue-600 font-bold">
                 {calculateDiscountPrice(product.price, product.discount)}
               </p>
             </>
           ) : (
-            <p className="text-blue-600 font-bold">{product.price}</p>
+            <p className="text-blue-600 font-bold">{formatPrice(product.price)}</p>
           )}
         </div>
 
