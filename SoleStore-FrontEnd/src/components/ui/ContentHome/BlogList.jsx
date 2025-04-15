@@ -89,7 +89,7 @@ const BlogList = () => {
                             >
                                 <div className="blog-card h-full bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
                                     <div className="relative overflow-hidden group">
-                                        <Link to={`/blog/${blog.id}`} className="block">
+                                        <Link to={`/blogs/${blog.id}`} className="block">
                                             <div className="h-60 overflow-hidden">
                                                 <img 
                                                     src={blog.image} 
@@ -121,13 +121,13 @@ const BlogList = () => {
                                             </div>
                                         </div>
                                         <h3 className="font-bold text-xl mb-3 line-clamp-2 text-gray-800">
-                                            <Link to={`/blog/${blog.id}`} className="no-underline text-gray-800 hover:text-gray-800">
+                                            <Link to={`/blogs/${blog.id}`} className="no-underline text-gray-800 hover:text-gray-800">
                                                 {blog.title}
                                             </Link>
                                         </h3>
                                         <p className="text-gray-600 line-clamp-3 mb-4">{blog.summary}</p>
                                         <Link 
-                                            to={`/blog/${blog.id}`} 
+                                            to={`/blogs/${blog.id}`} 
                                             className="inline-flex items-center text-blue-600 font-medium hover:text-blue-800 transition-colors"
                                         >
                                             Đọc thêm

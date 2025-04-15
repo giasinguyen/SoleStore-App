@@ -4,10 +4,11 @@ import { useOrder } from '../context/ContextAPI';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Checkout = () => {
-    const { orderList, setOrderList } = useOrder();
+    const { orderList, saveOrderToHistory, calculateSubtotal } = useOrder();
     const navigate = useNavigate();
     const [orderStep, setOrderStep] = useState(1); // 1: Thông tin, 2: Xác nhận, 3: Hoàn tất
     const [notification, setNotification] = useState({ show: false, message: '', type: 'success' });
+    const [completedOrder, setCompletedOrder] = useState(null);
 
     // Lấy thông tin user từ localStorage (đã đăng nhập)
     const [user] = useState(() => {
@@ -30,11 +31,6 @@ const Checkout = () => {
     }, [user]);
 
     const shippingFee = 5;
-
-    // Tính tổng giá trị đơn hàng chưa bao gồm phí vận chuyển
-    const calculateSubtotal = () => {
-        return orderList.reduce((total, item) => total + item.price * item.quantity, 0);
-    };
 
     // Format số tiền theo VND
     const formatCurrency = (amount) => {
@@ -78,30 +74,30 @@ const Checkout = () => {
     };
 
     const handlePlaceOrder = () => {
+        // Tạo thông tin đơn hàng
         const orderDetails = {
-            products: orderList,
             customerName,
             phoneNumber,
             address,
             paymentMethod,
             total: calculateSubtotal() + shippingFee,
-            date: new Date().toLocaleString(),
+            orderDate: new Date().toISOString(),
+            userId: user?.id, // Thêm userId nếu có để lọc đơn hàng theo người dùng
         };
 
-        console.log('Đơn hàng:', orderDetails);
-        setOrderStep(3);
+        // Lưu đơn hàng vào lịch sử và xóa giỏ hàng
+        const savedOrder = saveOrderToHistory(orderDetails);
+        setCompletedOrder(savedOrder);
         
-        // Đặt lại giỏ hàng sau 3 giây
-        setTimeout(() => {
-            setOrderList([]);
-        }, 3000);
+        console.log('Đơn hàng đã lưu:', savedOrder);
+        setOrderStep(3);
     };
 
     const handleGoHome = () => {
         navigate('/', { replace: true });
     };
 
-// Hiệu ứng cho container, với trì hoãn hiệu ứng con
+    // Hiệu ứng cho container, với trì hoãn hiệu ứng con
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: { 
@@ -754,29 +750,59 @@ const Checkout = () => {
                                     </motion.h4>
                                     
                                     <motion.p 
-                                        className="text-gray-300 mb-6"
+                                        className="text-gray-300 mb-3"
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         transition={{ delay: 0.7 }}
                                     >
-                                        Đơn hàng của bạn đã được tiếp nhận và đang được xử lý. Chúng tôi sẽ giao hàng trong thời gian sớm nhất.
+                                        Đơn hàng của bạn đã được tiếp nhận và đang được xử lý.
                                     </motion.p>
                                     
-                                    <motion.button
-                                        onClick={handleGoHome}
-                                        className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
-                                        variants={buttonVariants}
-                                        whileHover="hover"
-                                        whileTap="tap"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        transition={{ delay: 0.9 }}
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7m-14 0l2 2m0 0l7 7 7-7m-14 0l2-2" />
-                                        </svg>
-                                        Quay về trang chủ
-                                    </motion.button>
+                                    {completedOrder && (
+                                        <motion.div
+                                            className="bg-white/10 p-4 rounded-lg mb-6 text-left border border-white/20"
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 0.7 }}
+                                        >
+                                            <p className="text-white text-sm mb-1">Mã đơn hàng: <span className="font-medium">{completedOrder.id}</span></p>
+                                            <p className="text-white text-sm">Bạn có thể theo dõi đơn hàng trong mục "Đơn hàng của tôi" trên trang cá nhân.</p>
+                                        </motion.div>
+                                    )}
+                                    
+                                    <div className="flex flex-col md:flex-row gap-4 w-full">
+                                        <motion.button
+                                            onClick={() => navigate('/account')}
+                                            className="flex-1 py-3 px-4 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+                                            variants={buttonVariants}
+                                            whileHover="hover"
+                                            whileTap="tap"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ delay: 0.9 }}
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            </svg>
+                                            Xem đơn hàng
+                                        </motion.button>
+                                        
+                                        <motion.button
+                                            onClick={handleGoHome}
+                                            className="flex-1 py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+                                            variants={buttonVariants}
+                                            whileHover="hover"
+                                            whileTap="tap"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ delay: 0.9 }}
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7m-14 0l2 2m0 0l7 7 7-7m-14 0l2-2" />
+                                            </svg>
+                                            Quay về trang chủ
+                                        </motion.button>
+                                    </div>
                                 </div>
                             </motion.div>
                         </motion.div>

@@ -12,10 +12,21 @@ export const OrderProvider = ({ children }) => {
         return savedCart ? JSON.parse(savedCart) : [];
     });
 
+    // Initialize order history from localStorage
+    const [orderHistory, setOrderHistory] = useState(() => {
+        const savedHistory = localStorage.getItem('orderHistory');
+        return savedHistory ? JSON.parse(savedHistory) : [];
+    });
+
     // Save cart to localStorage whenever it changes
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(orderList));
     }, [orderList]);
+
+    // Save order history to localStorage whenever it changes
+    useEffect(() => {
+        localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+    }, [orderHistory]);
 
     // Add item to cart
     const addToCart = (selectedProduct) => {
@@ -60,14 +71,41 @@ export const OrderProvider = ({ children }) => {
         setOrderList([]);
     };
 
+    // Add order to history and clear cart
+    const saveOrderToHistory = (orderDetails) => {
+        // Generate a unique order ID
+        const orderId = `ORD-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
+        
+        // Create the complete order object
+        const completedOrder = {
+            id: orderId,
+            date: new Date().toISOString(),
+            status: "processing", // Initial status: processing
+            items: [...orderList],
+            ...orderDetails
+        };
+        
+        // Add to order history
+        setOrderHistory([completedOrder, ...orderHistory]);
+        
+        // Clear cart
+        clearCart();
+        
+        return completedOrder;
+    };
+
     // Context value
     const value = {
         orderList,
+        setOrderList,
         addToCart,
         removeFromCart,
         updateQuantity,
         calculateSubtotal,
-        clearCart
+        clearCart,
+        orderHistory,
+        setOrderHistory,
+        saveOrderToHistory
     };
 
     return (
