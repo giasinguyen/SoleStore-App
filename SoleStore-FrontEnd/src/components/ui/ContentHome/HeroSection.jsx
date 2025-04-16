@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Button, Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Carousel, Button } from 'react-bootstrap';
 import "./HeroSection.css";
 
 // Import hình ảnh banner
@@ -10,7 +10,7 @@ import SlideShow3 from "../../../assets/images/SlideShow3.png";
 
 const HeroSection = () => {
     const [index, setIndex] = useState(0);
-    
+
     const slides = [
         {
             image: SlideShow1,
@@ -32,7 +32,7 @@ const HeroSection = () => {
             secondaryLink: "/womens-sports",
             primaryText: "Mua ngay",
             secondaryText: "Xem thêm",
-            position: "right" 
+            position: "right"
         },
         {
             image: SlideShow3,
@@ -61,9 +61,9 @@ const HeroSection = () => {
     }, [slides.length]);
 
     return (
-        <div className="hero-section">
-            <Carousel 
-                activeIndex={index} 
+        <div className="hero-section" >
+            <Carousel
+                activeIndex={index}
                 onSelect={handleSelect}
                 controls={true}
                 indicators={true}
@@ -90,18 +90,18 @@ const HeroSection = () => {
                                 <h1 className="animate-title">{slide.title}</h1>
                                 <p className="animate-description">{slide.description}</p>
                                 <div className="carousel-buttons">
-                                    <Button 
-                                        as={Link} 
-                                        to={slide.primaryLink} 
-                                        variant="primary" 
+                                    <Button
+                                        as={Link}
+                                        to={slide.primaryLink}
+                                        variant="primary"
                                         className="animate-btn primary-btn"
                                     >
                                         {slide.primaryText}
                                     </Button>
-                                    <Button 
-                                        as={Link} 
-                                        to={slide.secondaryLink} 
-                                        variant="outline-light" 
+                                    <Button
+                                        as={Link}
+                                        to={slide.secondaryLink}
+                                        variant="outline-light"
                                         className="animate-btn secondary-btn"
                                     >
                                         {slide.secondaryText}
@@ -123,7 +123,7 @@ const HeroSection = () => {
                     />
                 ))}
             </div>
-            
+
             {/* Nút cuộn xuống */}
             <a href="#new-arrivals" className="scroll-down-button">
                 <div className="chevron"></div>

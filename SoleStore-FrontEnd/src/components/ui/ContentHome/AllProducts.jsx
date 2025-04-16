@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from "react-bootstrap";
 import ReactPaginate from 'react-paginate';
 import { Link } from "react-router-dom";
@@ -29,13 +29,13 @@ const AllProducts = () => {
             try {
                 setLoading(true);
                 const data = await productAPI.getAllProducts();
-                
+
                 setProducts(data);
-                
+
                 // Lấy danh sách danh mục và thương hiệu độc nhất
                 const uniqueCategories = [...new Set(data.map(product => product.category))];
                 setCategories(uniqueCategories);
-                
+
                 const uniqueBrands = [...new Set(data.map(product => product.brand))];
                 setBrands(uniqueBrands);
             } catch (error) {
@@ -44,7 +44,7 @@ const AllProducts = () => {
                 setLoading(false);
             }
         };
-        
+
         fetchProducts();
     }, []);
 
@@ -156,7 +156,7 @@ const AllProducts = () => {
                 ) : currentItems.length === 0 ? (
                     <div className="text-center py-5">
                         <p className="text-lg text-gray-600">Không tìm thấy sản phẩm nào phù hợp với điều kiện lọc.</p>
-                        <button 
+                        <button
                             className="btn btn-outline-primary mt-3"
                             onClick={() => {
                                 setCategory('Tất cả danh mục');
@@ -188,6 +188,11 @@ const AllProducts = () => {
                                                 <h5 className="card-title">{product.name}</h5>
                                                 <p className="text-muted">{product.category}</p>
                                             </div>
+                                            {product.originalPrice && (
+                                                <span className="fs-6 text-muted text-decoration-line-through ms-2">
+                                                    {formatCurrency(product.originalPrice)}
+                                                </span>
+                                            )}
                                             <div className="d-flex justify-content-between align-items-center mt-3">
                                                 {/* Định dạng giá theo tiền VND */}
                                                 <h5 className="text-danger fw-bold">{formatCurrency(product.price)}</h5>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { productAPI, reviewAPI } from "../services/api";
-import '../App.css'; 
+import '../App.css';
 
 // Import our reusable components
 import HeroBanner from "../components/ui/common/HeroBanner";
@@ -8,10 +8,14 @@ import ProductFilter from "../components/ui/common/ProductFilter";
 import ProductGrid from "../components/ui/common/ProductGrid";
 import CustomerReviews from "../components/ui/common/CustomerReviews";
 import RelatedProducts from "../components/ui/common/RelatedProducts";
-
+import { useParams } from "react-router-dom";
 const heroImageUrl = "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80";
 
 const WomensHeels = () => {
+    const { path } = useParams()
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [path]);
     const [products, setProducts] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -37,12 +41,12 @@ const WomensHeels = () => {
 
                 // Lấy tất cả sản phẩm từ API
                 const productsData = await productAPI.getAllProducts();
-                
+
                 // Lọc ra giày cao gót nữ
                 // Các sản phẩm cao gót thường có category là "Heels" hoặc bất kỳ danh mục nào chứa từ "heel"
                 const womensHeels = productsData.filter(
                     (product) =>
-                        product.gender === "Nữ" && product.category === "Giày cao gót" 
+                        product.gender === "Nữ" && product.category === "Giày cao gót"
                 );
 
                 // Nếu không có sản phẩm giày cao gót nữ, sử dụng sản phẩm nữ khác
@@ -50,17 +54,17 @@ const WomensHeels = () => {
                     womensHeels.length > 0
                         ? womensHeels
                         : productsData.filter((product) => product.gender === "Nữ").slice(0, 30);
-                
+
                 // Lấy đánh giá từ API
                 try {
                     const reviewsData = await reviewAPI.getAllReviews();
-                    
+
                     // Lọc các đánh giá liên quan đến sản phẩm hiển thị
                     const productIds = productsToUse.map(p => p.id.toString());
-                    const relevantReviews = reviewsData.filter(r => 
+                    const relevantReviews = reviewsData.filter(r =>
                         productIds.includes(r.idProduct)
                     ).slice(0, 6);
-                    
+
                     setReviews(relevantReviews);
                 } catch (reviewError) {
                     console.error("Error loading reviews:", reviewError);
@@ -161,21 +165,21 @@ const WomensHeels = () => {
 
         if (activeCategory !== "all") {
             if (activeCategory === "stiletto") {
-                result = result.filter(p => 
-                    p.category === "Stiletto" || 
-                    (p.subCategory && p.subCategory === "Stiletto") || 
+                result = result.filter(p =>
+                    p.category === "Stiletto" ||
+                    (p.subCategory && p.subCategory === "Stiletto") ||
                     p.name.toLowerCase().includes("stiletto")
                 );
             } else if (activeCategory === "block") {
-                result = result.filter(p => 
-                    p.category === "Block" || 
-                    (p.subCategory && p.subCategory === "Block") || 
+                result = result.filter(p =>
+                    p.category === "Block" ||
+                    (p.subCategory && p.subCategory === "Block") ||
                     p.name.toLowerCase().includes("block")
                 );
             } else if (activeCategory === "kitten") {
-                result = result.filter(p => 
-                    p.category === "Kitten" || 
-                    (p.subCategory && p.subCategory === "Kitten") || 
+                result = result.filter(p =>
+                    p.category === "Kitten" ||
+                    (p.subCategory && p.subCategory === "Kitten") ||
                     p.name.toLowerCase().includes("kitten")
                 );
             }
@@ -217,28 +221,28 @@ const WomensHeels = () => {
     ]);
 
     // eslint-disable-next-line no-unused-vars
-    const getStilettoHeels = () => products.filter((p) => 
-        p.category === "Stiletto" || 
+    const getStilettoHeels = () => products.filter((p) =>
+        p.category === "Stiletto" ||
         p.name.toLowerCase().includes("stiletto")
     ).slice(0, 4);
-    
+
     // eslint-disable-next-line no-unused-vars
-    const getBlockHeels = () => products.filter((p) => 
-        p.category === "Block" || 
+    const getBlockHeels = () => products.filter((p) =>
+        p.category === "Block" ||
         p.name.toLowerCase().includes("block")
     ).slice(0, 4);
-    
+
     // eslint-disable-next-line no-unused-vars
-    const getKittenHeels = () => products.filter((p) => 
-        p.category === "Kitten" || 
+    const getKittenHeels = () => products.filter((p) =>
+        p.category === "Kitten" ||
         p.name.toLowerCase().includes("kitten")
     ).slice(0, 4);
-    
+
     // eslint-disable-next-line no-unused-vars
     const getNewestArrivals = () => products.filter((p) => p.isNewArrival).slice(0, 4);
-    
+
     const getBestSellers = () => products.filter((p) => p.isFeatured).slice(0, 4);
-    
+
     // eslint-disable-next-line no-unused-vars
     const getDiscountedProducts = () =>
         products
@@ -273,17 +277,17 @@ const WomensHeels = () => {
 
     return (
         <div className="bg-gray-50 min-h-screen">
-            <HeroBanner 
+            <HeroBanner
                 imageUrl={heroImageUrl}
                 title="Giày Cao Gót Nữ"
                 description="Khám phá bộ sưu tập giày cao gót cao cấp, tôn dáng và tạo nên vẻ sang trọng cho mọi bước chân"
                 buttonText="Khám Phá Ngay"
             />
 
-            <div className="container mx-auto px-4 py-6">
+            <div className="container-custom mx-auto px-4 py-6">
                 <div className="flex flex-col md:flex-row gap-6">
                     <div className="md:w-1/3 hidden md:block">
-                        <ProductFilter 
+                        <ProductFilter
                             products={products}
                             activeFilters={activeFilters}
                             resetFilters={resetFilters}
@@ -314,7 +318,7 @@ const WomensHeels = () => {
                     </div>
 
                     <div className="md:w-2/3">
-                        <ProductGrid 
+                        <ProductGrid
                             products={filteredProducts}
                             loading={loading}
                             calculateDiscountPrice={calculateDiscountPrice}
@@ -350,10 +354,10 @@ const WomensHeels = () => {
                     </div>
                 </div>
 
-                <RelatedProducts 
-                    products={getBestSellers()} 
-                    title="Bạn Có Thể Thích" 
-                    calculateDiscountPrice={calculateDiscountPrice} 
+                <RelatedProducts
+                    products={getBestSellers()}
+                    title="Bạn Có Thể Thích"
+                    calculateDiscountPrice={calculateDiscountPrice}
                 />
 
                 <CustomerReviews reviews={reviews} />

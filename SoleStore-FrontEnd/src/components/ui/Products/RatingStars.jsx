@@ -1,3 +1,4 @@
+// eslint-disable-next-line react/prop-types
 const RatingStars = ({ rate }) => {
     const fullStars = Math.floor(rate); // Phần nguyên (ví dụ: 4)
     const hasHalfStar = rate % 1 !== 0; // Kiểm tra có phần thập phân không (ví dụ: 0.5)

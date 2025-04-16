@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 
-const HeroBanner = ({ 
-  imageUrl, 
-  title, 
-  description, 
-  buttonText = "Khám Phá Ngay", 
+const HeroBanner = ({
+  imageUrl,
+  title,
+  description,
+  buttonText = "Khám Phá Ngay",
   buttonLink = "#"
 }) => {
   return (
@@ -23,9 +23,10 @@ const HeroBanner = ({
             <p className="text-lg md:text-xl mb-6 opacity-90">
               {description}
             </p>
-            <a 
-              href={buttonLink} 
+            <a
+              href={buttonLink}
               className="inline-block bg-white text-gray-800 font-semibold px-6 py-2 rounded hover:bg-gray-200 transition-colors"
+              style={{ textDecoration: "none" }}
             >
               {buttonText}
             </a>

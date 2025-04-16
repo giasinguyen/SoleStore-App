@@ -24,8 +24,7 @@ const CustomerReviews = ({ reviews }) => {
                 <img
                   src={
                     review.image ||
-                    `https://randomuser.me/api/portraits/${
-                      Math.random() > 0.5 ? "women" : "men"
+                    `https://randomuser.me/api/portraits/${Math.random() > 0.5 ? "women" : "men"
                     }/${Math.floor(Math.random() * 100)}.jpg`
                   }
                   alt={review.name}
@@ -51,7 +50,7 @@ const CustomerReviews = ({ reviews }) => {
                 </div>
               </div>
             </div>
-            <p className="text-gray-600 italic">"{review.text}"</p>
+            <p className="text-gray-600 italic">{review.text}</p>
           </div>
         ))}
       </div>

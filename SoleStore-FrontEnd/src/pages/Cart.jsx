@@ -1,7 +1,7 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useOrder } from '../context/ContextAPI';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const CartPage = () => {
     const { orderList, removeFromCart, updateQuantity } = useOrder();
@@ -9,11 +9,11 @@ const CartPage = () => {
     // Tạo độ mờ khi xoá sản phẩm khỏi giỏ hàng
     const [removingId, setRemovingId] = useState(null);
 
-    const handleQuantityChange = (id, quantity) => {
+    const handleQuantityChange = (id, size, quantity) => {
         const updatedQuantity = parseInt(quantity);
         if (updatedQuantity < 1 || isNaN(updatedQuantity)) return;
 
-        updateQuantity(id, updatedQuantity);
+        updateQuantity(id, size, updatedQuantity);
     };
 
     const handleRemoveItem = (id) => {
@@ -31,18 +31,18 @@ const CartPage = () => {
 
     // Format số tiền theo VND
     const formatCurrency = (amount) => {
-        return new Intl.NumberFormat('vi-VN', { 
-            style: 'currency', 
-            currency: 'VND' 
-        }).format(amount); 
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(amount);
     };
 
     const containerVariants = {
         hidden: { opacity: 0 },
-        visible: { 
+        visible: {
             opacity: 1,
             // Thời gian chuyển trạng thái
-            transition: { 
+            transition: {
                 duration: 0.5,
                 when: "beforeChildren",
                 // Các phần tử con bên trong container sẽ xuất hiện lần lượt, cách nhau 0.1 giây
@@ -53,8 +53,8 @@ const CartPage = () => {
 
     const itemVariants = {
         hidden: { y: 20, opacity: 0 },
-        visible: { 
-            y: 0, 
+        visible: {
+            y: 0,
             opacity: 1,
             transition: { type: "spring", stiffness: 300, damping: 24 }
         },
@@ -66,18 +66,18 @@ const CartPage = () => {
     };
 
     const buttonVariants = {
-        hover: { 
+        hover: {
             scale: 1.05,
             boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)",
-            transition: { 
-                type: "spring", 
+            transition: {
+                type: "spring",
                 // Độ cứng của hiệu ứng đàn hồi
-                stiffness: 400, 
+                stiffness: 400,
                 // Độ giảm chấn
                 damping: 10
             }
         },
-        tap: { 
+        tap: {
             // Giảm kích thước nút xuống 95% so với kích thước ban đầu
             scale: 0.95
         }
@@ -98,14 +98,14 @@ const CartPage = () => {
                 transition={{ duration: 0.8 }}
             >
                 <div className="absolute inset-0 bg-black opacity-50"></div>
-                
-                <motion.div 
+
+                <motion.div
                     className="container text-center my-5 z-10"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                 >
-                    <motion.h3 
+                    <motion.h3
                         className="text-white text-3xl font-bold mb-6"
                         initial={{ scale: 0.9 }}
                         animate={{ scale: 1 }}
@@ -118,8 +118,8 @@ const CartPage = () => {
                         whileHover="hover"
                         whileTap="tap"
                     >
-                        <Link 
-                            to="/" 
+                        <Link
+                            to="/"
                             className="inline-block px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
                         >
                             Quay về trang chủ
@@ -143,7 +143,7 @@ const CartPage = () => {
             <div className="absolute inset-0 bg-black opacity-40"></div>
 
             <div className="container mx-auto px-4 z-10 relative">
-                <motion.h2 
+                <motion.h2
                     className="text-4xl font-bold text-white text-center mb-8"
                     initial={{ y: -20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -154,7 +154,7 @@ const CartPage = () => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Danh sách sản phẩm */}
-                    <motion.div 
+                    <motion.div
                         className="lg:col-span-2"
                         variants={containerVariants}
                         initial="hidden"
@@ -164,11 +164,11 @@ const CartPage = () => {
                             <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4">
                                 <h3 className="font-bold text-lg">Sản phẩm đã chọn</h3>
                             </div>
-                            
+
                             <div className="divide-y divide-gray-200/20">
                                 <AnimatePresence>
                                     {orderList.map(item => (
-                                        <motion.div 
+                                        <motion.div
                                             key={item.id}
                                             className={`flex flex-col md:flex-row items-start md:items-center p-4 ${item.id === removingId ? 'opacity-50' : ''}`}
                                             variants={itemVariants}
@@ -177,9 +177,9 @@ const CartPage = () => {
                                         >
                                             <div className="flex items-center flex-1 w-full md:w-auto mb-4 md:mb-0">
                                                 <div className="bg-white rounded-lg p-1 mr-4 flex-shrink-0">
-                                                    <motion.img 
-                                                        src={item.image} 
-                                                        alt={item.name} 
+                                                    <motion.img
+                                                        src={item.image}
+                                                        alt={item.name}
                                                         className="w-16 h-16 object-cover rounded"
                                                         whileHover={{ scale: 1.05 }}
                                                         transition={{ duration: 0.2 }}
@@ -191,13 +191,13 @@ const CartPage = () => {
                                                     <p className="text-white font-medium mt-1">{formatCurrency(item.price)}</p>
                                                 </div>
                                             </div>
-                                            
+
                                             <div className="flex items-center space-x-4 w-full md:w-auto">
                                                 <div className="relative">
                                                     <div className="flex items-center bg-white/20 rounded-lg border border-white/30 overflow-hidden">
-                                                        <button 
+                                                        <button
                                                             className="px-3 py-1 text-white hover:bg-white/10 transition-colors"
-                                                            onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
+                                                            onClick={() => handleQuantityChange(item.id, item.size, item.quantity - 1)}
                                                             disabled={item.quantity <= 1}
                                                         >
                                                             -
@@ -209,16 +209,16 @@ const CartPage = () => {
                                                             onChange={(e) => handleQuantityChange(item.id, e.target.value)}
                                                             className="w-12 text-center bg-transparent text-white border-none focus:outline-none focus:ring-0"
                                                         />
-                                                        <button 
+                                                        <button
                                                             className="px-3 py-1 text-white hover:bg-white/10 transition-colors"
-                                                            onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                                                            onClick={() => handleQuantityChange(item.id, item.size, item.quantity + 1)}
                                                         >
                                                             +
                                                         </button>
                                                     </div>
                                                 </div>
-                                                
-                                                <motion.button 
+
+                                                <motion.button
                                                     className="p-2 bg-red-500/80 hover:bg-red-600/80 text-white rounded-lg transition-colors"
                                                     onClick={() => handleRemoveItem(item.id)}
                                                     whileHover={{ scale: 1.1 }}
@@ -237,7 +237,7 @@ const CartPage = () => {
                     </motion.div>
 
                     {/* Tóm tắt đơn hàng */}
-                    <motion.div 
+                    <motion.div
                         className="lg:col-span-1"
                         initial={{ x: 20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
@@ -255,10 +255,10 @@ const CartPage = () => {
                                     </div>
                                     <div className="flex justify-between">
                                         <span className="text-gray-300">Phí vận chuyển:</span>
-                                        <span>{formatCurrency(5)}</span>
+                                        <span>{formatCurrency(50000)}</span>
                                     </div>
                                 </div>
-                                
+
                                 <div className="border-t border-white/20 pt-4 mb-6">
                                     <div className="flex justify-between font-bold text-lg">
                                         <span>Tổng cộng:</span>
@@ -267,18 +267,18 @@ const CartPage = () => {
                                             animate={{ scale: [1, 1.05, 1] }}
                                             transition={{ duration: 0.5, delay: 0.5 }}
                                         >
-                                            {formatCurrency(calculateSubtotal() + 5)}
+                                            {formatCurrency(calculateSubtotal() + 50000)}
                                         </motion.span>
                                     </div>
                                 </div>
-                                
+
                                 <motion.div
                                     variants={buttonVariants}
                                     whileHover="hover"
                                     whileTap="tap"
                                 >
-                                    <Link 
-                                        to="/checkout" 
+                                    <Link
+                                        to="/checkout"
                                         className="w-full py-3 px-4 bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

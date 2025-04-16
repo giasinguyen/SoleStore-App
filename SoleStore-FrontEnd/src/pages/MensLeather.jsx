@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
+import '../App.css';
 import { productAPI, reviewAPI } from "../services/api";
-import '../App.css'; 
 
 // Import our reusable components
+import { useParams } from "react-router-dom";
+import CustomerReviews from "../components/ui/common/CustomerReviews";
 import HeroBanner from "../components/ui/common/HeroBanner";
 import ProductFilter from "../components/ui/common/ProductFilter";
 import ProductGrid from "../components/ui/common/ProductGrid";
-import CustomerReviews from "../components/ui/common/CustomerReviews";
 import RelatedProducts from "../components/ui/common/RelatedProducts";
-
 const heroImageUrl = "https://cany.vn/image/catalog/banner/cata/giay-tay-banner.png";
 
 const MensLeather = () => {
+    const { path } = useParams()
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [path]);
     const [products, setProducts] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -37,11 +41,11 @@ const MensLeather = () => {
 
                 // Lấy tất cả sản phẩm từ API
                 const productsData = await productAPI.getAllProducts();
-                
+
                 // Lọc ra giày da nam
                 const mensLeather = productsData.filter(
                     (product) =>
-                        product.gender === "Nam" && product.type === "Tây" 
+                        product.gender === "Nam" && product.type === "Tây"
                 );
 
                 // Nếu không có sản phẩm giày da nam, sử dụng sản phẩm nam khác
@@ -49,17 +53,17 @@ const MensLeather = () => {
                     mensLeather.length > 0
                         ? mensLeather
                         : productsData.filter((product) => product.gender === "Nam").slice(0, 30);
-                
+
                 // Lấy đánh giá từ API
                 try {
                     const reviewsData = await reviewAPI.getAllReviews();
-                    
+
                     // Lọc các đánh giá liên quan đến sản phẩm hiển thị
                     const productIds = productsToUse.map(p => p.id.toString());
-                    const relevantReviews = reviewsData.filter(r => 
+                    const relevantReviews = reviewsData.filter(r =>
                         productIds.includes(r.idProduct)
                     ).slice(0, 6);
-                    
+
                     setReviews(relevantReviews);
                 } catch (reviewError) {
                     console.error("Error loading reviews:", reviewError);
@@ -161,21 +165,21 @@ const MensLeather = () => {
 
         if (activeCategory !== "all") {
             if (activeCategory === "casual") {
-                result = result.filter(p => 
-                    p.category === "Casual" || 
-                    (p.subCategory && p.subCategory === "Casual") || 
+                result = result.filter(p =>
+                    p.category === "Casual" ||
+                    (p.subCategory && p.subCategory === "Casual") ||
                     p.name.toLowerCase().includes("casual")
                 );
             } else if (activeCategory === "formal") {
-                result = result.filter(p => 
-                    p.category === "Formal" || 
-                    (p.subCategory && p.subCategory === "Formal") || 
+                result = result.filter(p =>
+                    p.category === "Formal" ||
+                    (p.subCategory && p.subCategory === "Formal") ||
                     p.name.toLowerCase().includes("formal")
                 );
             } else if (activeCategory === "beach") {
-                result = result.filter(p => 
-                    p.category === "Beach" || 
-                    (p.subCategory && p.subCategory === "Beach") || 
+                result = result.filter(p =>
+                    p.category === "Beach" ||
+                    (p.subCategory && p.subCategory === "Beach") ||
                     p.name.toLowerCase().includes("beach")
                 );
             }
@@ -245,17 +249,17 @@ const MensLeather = () => {
 
     return (
         <div className="bg-gray-50 min-h-screen">
-            <HeroBanner 
+            <HeroBanner
                 imageUrl={heroImageUrl}
                 title="Giày Da Nam"
                 description="Khám phá bộ sưu tập giày da nam cao cấp, kết hợp hoàn hảo giữa phong cách và sự thoải mái"
                 buttonText="Khám Phá Ngay"
             />
 
-            <div className="container mx-auto px-4 py-6">
+            <div className="container-custom mx-auto px-4 py-6">
                 <div className="flex flex-col md:flex-row gap-6">
                     <div className="md:w-1/3 hidden md:block">
-                        <ProductFilter 
+                        <ProductFilter
                             products={products}
                             activeFilters={activeFilters}
                             resetFilters={resetFilters}
@@ -286,7 +290,7 @@ const MensLeather = () => {
                     </div>
 
                     <div className="md:w-2/3">
-                        <ProductGrid 
+                        <ProductGrid
                             products={filteredProducts}
                             loading={loading}
                             calculateDiscountPrice={calculateDiscountPrice}
@@ -309,10 +313,10 @@ const MensLeather = () => {
                     </button>
                 </div>
 
-                <RelatedProducts 
-                    products={getBestSellers()} 
-                    title="Bạn Có Thể Thích" 
-                    calculateDiscountPrice={calculateDiscountPrice} 
+                <RelatedProducts
+                    products={getBestSellers()}
+                    title="Bạn Có Thể Thích"
+                    calculateDiscountPrice={calculateDiscountPrice}
                 />
 
                 <CustomerReviews reviews={reviews} />

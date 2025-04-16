@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
+import '../App.css';
 import { productAPI, reviewAPI } from "../services/api";
-import '../App.css'; 
 
 // Import our reusable components
+import { useParams } from "react-router-dom";
+import CustomerReviews from "../components/ui/common/CustomerReviews";
 import HeroBanner from "../components/ui/common/HeroBanner";
 import ProductFilter from "../components/ui/common/ProductFilter";
 import ProductGrid from "../components/ui/common/ProductGrid";
-import CustomerReviews from "../components/ui/common/CustomerReviews";
 import RelatedProducts from "../components/ui/common/RelatedProducts";
-
-const heroImageUrl = "https://img.lovepik.com/photo/50084/7991.jpg_wh860.jpg";
+const heroImageUrl =
+    "https://file.hstatic.net/200000174405/collection/19238246_1997064527179566_5473797071884482645_o_ff15685be80c4d21973dcb914398e04f.jpg";
 
 const MensSports = () => {
+    const { path } = useParams()
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [path]);
     const [products, setProducts] = useState([]);
     const [reviews, setReviews] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -37,16 +42,16 @@ const MensSports = () => {
 
                 // Lấy tất cả sản phẩm từ API
                 const productsData = await productAPI.getAllProducts();
-                
+
                 // Lọc ra giày thể thao nam
                 const mensSports = productsData.filter(
                     (product) =>
-                        product.gender === "Nam" && 
-                        (product.category === "Giày thể thao" || 
-                        (product.name && 
-                            (product.name.toLowerCase().includes("thể thao") || 
-                            product.name.toLowerCase().includes("running") || 
-                            product.name.toLowerCase().includes("sport"))))
+                        product.gender === "Nam" &&
+                        (product.category === "Giày thể thao" ||
+                            (product.name &&
+                                (product.name.toLowerCase().includes("thể thao") ||
+                                    product.name.toLowerCase().includes("running") ||
+                                    product.name.toLowerCase().includes("sport"))))
                 );
 
                 // Nếu không có sản phẩm giày thể thao nam, sử dụng sản phẩm nam khác
@@ -54,17 +59,17 @@ const MensSports = () => {
                     mensSports.length > 0
                         ? mensSports
                         : productsData.filter((product) => product.gender === "Nam").slice(0, 30);
-                
+
                 // Lấy đánh giá từ API
                 try {
                     const reviewsData = await reviewAPI.getAllReviews();
-                    
+
                     // Lọc các đánh giá liên quan đến sản phẩm hiển thị
                     const productIds = productsToUse.map(p => p.id.toString());
-                    const relevantReviews = reviewsData.filter(r => 
+                    const relevantReviews = reviewsData.filter(r =>
                         productIds.includes(r.idProduct)
                     ).slice(0, 6);
-                    
+
                     setReviews(relevantReviews);
                 } catch (reviewError) {
                     console.error("Error loading reviews:", reviewError);
@@ -166,23 +171,23 @@ const MensSports = () => {
 
         if (activeCategory !== "all") {
             if (activeCategory === "running") {
-                result = result.filter(p => 
-                    p.category === "Running" || 
-                    (p.subCategory && p.subCategory === "Running") || 
+                result = result.filter(p =>
+                    p.category === "Running" ||
+                    (p.subCategory && p.subCategory === "Running") ||
                     p.name.toLowerCase().includes("running") ||
                     p.name.toLowerCase().includes("chạy")
                 );
             } else if (activeCategory === "training") {
-                result = result.filter(p => 
-                    p.category === "Training" || 
-                    (p.subCategory && p.subCategory === "Training") || 
+                result = result.filter(p =>
+                    p.category === "Training" ||
+                    (p.subCategory && p.subCategory === "Training") ||
                     p.name.toLowerCase().includes("training") ||
                     p.name.toLowerCase().includes("tập")
                 );
             } else if (activeCategory === "football") {
-                result = result.filter(p => 
-                    p.category === "Football" || 
-                    (p.subCategory && p.subCategory === "Football") || 
+                result = result.filter(p =>
+                    p.category === "Football" ||
+                    (p.subCategory && p.subCategory === "Football") ||
                     p.name.toLowerCase().includes("football") ||
                     p.name.toLowerCase().includes("bóng đá")
                 );
@@ -253,17 +258,17 @@ const MensSports = () => {
 
     return (
         <div className="bg-gray-50 min-h-screen">
-            <HeroBanner 
+            <HeroBanner
                 imageUrl={heroImageUrl}
                 title="Giày Thể Thao Nam"
                 description="Khám phá bộ sưu tập giày thể thao nam cao cấp, tối ưu hiệu suất và phong cách cho mọi hoạt động"
                 buttonText="Khám Phá Ngay"
             />
 
-            <div className="container mx-auto px-4 py-6">
+            <div className="container-custom mx-auto px-4 py-6">
                 <div className="flex flex-col md:flex-row gap-6">
                     <div className="md:w-1/3 hidden md:block">
-                        <ProductFilter 
+                        <ProductFilter
                             products={products}
                             activeFilters={activeFilters}
                             resetFilters={resetFilters}
@@ -294,7 +299,7 @@ const MensSports = () => {
                     </div>
 
                     <div className="md:w-2/3">
-                        <ProductGrid 
+                        <ProductGrid
                             products={filteredProducts}
                             loading={loading}
                             calculateDiscountPrice={calculateDiscountPrice}
@@ -317,10 +322,10 @@ const MensSports = () => {
                     </button>
                 </div>
 
-                <RelatedProducts 
-                    products={getBestSellers()} 
-                    title="Bạn Có Thể Thích" 
-                    calculateDiscountPrice={calculateDiscountPrice} 
+                <RelatedProducts
+                    products={getBestSellers()}
+                    title="Bạn Có Thể Thích"
+                    calculateDiscountPrice={calculateDiscountPrice}
                 />
 
                 <CustomerReviews reviews={reviews} />

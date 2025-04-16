@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { blogAPI } from '../../../services/api';
-import { motion } from 'framer-motion';
 
 const BlogList = () => {
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
-    
+
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
@@ -20,10 +20,10 @@ const BlogList = () => {
                 setLoading(false);
             }
         };
-        
+
         fetchBlogs();
     }, []);
-    
+
     // Định dạng ngày tháng
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -34,7 +34,7 @@ const BlogList = () => {
         <section className="py-16 bg-gray-50">
             <div className="container mx-auto px-4">
                 <div className="text-center mb-12">
-                    <motion.h2 
+                    <motion.h2
                         className="text-3xl font-bold text-gray-800 mb-2 inline-block relative"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -44,7 +44,7 @@ const BlogList = () => {
                         Tin Tức & Chia Sẻ
                         <div className="h-1 w-24 bg-blue-600 absolute -bottom-2 left-1/2 transform -translate-x-1/2 rounded-full"></div>
                     </motion.h2>
-                    <motion.p 
+                    <motion.p
                         className="text-gray-600 mt-6 max-w-2xl mx-auto"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -54,7 +54,7 @@ const BlogList = () => {
                         Các bài viết mới nhất về xu hướng giày dép và thời trang
                     </motion.p>
                 </div>
-                
+
                 {loading ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         {[...Array(3)].map((_, index) => (
@@ -79,7 +79,7 @@ const BlogList = () => {
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         {blogs.map((blog, index) => (
-                            <motion.div 
+                            <motion.div
                                 key={blog.id}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -91,11 +91,10 @@ const BlogList = () => {
                                     <div className="relative overflow-hidden group">
                                         <Link to={`/blogs/${blog.id}`} className="block">
                                             <div className="h-60 overflow-hidden">
-                                                <img 
-                                                    src={blog.image} 
-                                                    alt={blog.title} 
-                                                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" 
-                                                    onError={(e) => {e.target.src = "https://via.placeholder.com/600x400?text=Blog+Image"}}
+                                                <img
+                                                    src={blog.image}
+                                                    alt={blog.title}
+                                                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                                                 />
                                             </div>
                                             <div className="absolute top-4 right-4 z-10">
@@ -114,20 +113,18 @@ const BlogList = () => {
                                                 {blog.author}
                                             </div>
                                             <div className="flex items-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                </svg>
+
                                                 {formatDate(blog.date)}
                                             </div>
                                         </div>
                                         <h3 className="font-bold text-xl mb-3 line-clamp-2 text-gray-800">
-                                            <Link to={`/blogs/${blog.id}`} className="no-underline text-gray-800 hover:text-gray-800">
+                                            <Link to={`/blogs/${blog.id}`} className="no-underline text-gray-800 hover:text-gray-800" style={{ textDecoration: "none" }}>
                                                 {blog.title}
                                             </Link>
                                         </h3>
                                         <p className="text-gray-600 line-clamp-3 mb-4">{blog.summary}</p>
-                                        <Link 
-                                            to={`/blogs/${blog.id}`} 
+                                        <Link
+                                            to={`/blogs/${blog.id}`}
                                             className="inline-flex items-center text-blue-600 font-medium hover:text-blue-800 transition-colors"
                                         >
                                             Đọc thêm
@@ -141,17 +138,19 @@ const BlogList = () => {
                         ))}
                     </div>
                 )}
-                
-                <motion.div 
+
+                <motion.div
                     className="text-center mt-12"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.3 }}
                 >
-                    <Link 
-                        to="/blogs" 
+                    <Link
+                        to="/blogs"
                         className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        style={{ textDecoration: 'none' }}
+
                     >
                         Xem tất cả bài viết
                         <svg className="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 20 20">

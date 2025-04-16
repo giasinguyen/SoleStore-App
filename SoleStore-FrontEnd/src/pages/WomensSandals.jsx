@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { productAPI, reviewAPI } from "../services/api";
-import '../App.css'; 
+import '../App.css';
 
 // Import our reusable components
 import HeroBanner from "../components/ui/common/HeroBanner";
@@ -8,10 +8,14 @@ import ProductFilter from "../components/ui/common/ProductFilter";
 import ProductGrid from "../components/ui/common/ProductGrid";
 import CustomerReviews from "../components/ui/common/CustomerReviews";
 import RelatedProducts from "../components/ui/common/RelatedProducts";
-
+import { useParams } from "react-router-dom";
 const heroImageUrl = "https://images.unsplash.com/photo-1562273138-f46be4ebdf33?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1400&q=80";
 
 const WomensSandals = () => {
+  const { path } = useParams()
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [path]);
   const [products, setProducts] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -36,13 +40,13 @@ const WomensSandals = () => {
 
         // Lấy tất cả sản phẩm từ API
         const productsData = await productAPI.getAllProducts();
-        
+
         // Lọc ra dép sandal nữ
         const womenSandals = productsData.filter(
           product =>
-            product.gender === "Nữ" && 
-            (product.category === "Sandal" || 
-            (product.name && product.name.toLowerCase().includes("sandal")))
+            product.gender === "Nữ" &&
+            (product.category === "Sandal" ||
+              (product.name && product.name.toLowerCase().includes("sandal")))
         );
 
         // Nếu không có sản phẩm sandal nữ, sử dụng sản phẩm nữ khác
@@ -54,13 +58,13 @@ const WomensSandals = () => {
         // Lấy đánh giá từ API
         try {
           const reviewsData = await reviewAPI.getAllReviews();
-          
+
           // Lọc các đánh giá liên quan đến sản phẩm hiển thị
           const productIds = productsToUse.map(p => p.id.toString());
-          const relevantReviews = reviewsData.filter(r => 
+          const relevantReviews = reviewsData.filter(r =>
             productIds.includes(r.idProduct)
           ).slice(0, 6);
-          
+
           setReviews(relevantReviews);
         } catch (reviewError) {
           console.error("Error loading reviews:", reviewError);
@@ -162,21 +166,21 @@ const WomensSandals = () => {
 
     if (activeCategory !== "all") {
       if (activeCategory === "casual") {
-        result = result.filter(p => 
-          p.category === "Casual" || 
-          (p.subCategory && p.subCategory === "Casual") || 
+        result = result.filter(p =>
+          p.category === "Casual" ||
+          (p.subCategory && p.subCategory === "Casual") ||
           p.name.toLowerCase().includes("casual")
         );
       } else if (activeCategory === "formal") {
-        result = result.filter(p => 
-          p.category === "Formal" || 
-          (p.subCategory && p.subCategory === "Formal") || 
+        result = result.filter(p =>
+          p.category === "Formal" ||
+          (p.subCategory && p.subCategory === "Formal") ||
           p.name.toLowerCase().includes("formal")
         );
       } else if (activeCategory === "beach") {
-        result = result.filter(p => 
-          p.category === "Beach" || 
-          (p.subCategory && p.subCategory === "Beach") || 
+        result = result.filter(p =>
+          p.category === "Beach" ||
+          (p.subCategory && p.subCategory === "Beach") ||
           p.name.toLowerCase().includes("beach")
         );
       }
@@ -246,17 +250,17 @@ const WomensSandals = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <HeroBanner 
+      <HeroBanner
         imageUrl={heroImageUrl}
         title="Dép Xăng Đan Nữ"
         description="Khám phá bộ sưu tập dép xăng đan nữ cao cấp, kết hợp hoàn hảo giữa sự thoải mái và thời trang"
         buttonText="Khám Phá Ngay"
       />
 
-      <div className="container mx-auto px-4 py-6">
+      <div className="container-custom mx-auto px-4 py-6">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="md:w-1/3 hidden md:block">
-            <ProductFilter 
+            <ProductFilter
               products={products}
               activeFilters={activeFilters}
               resetFilters={resetFilters}
@@ -287,7 +291,7 @@ const WomensSandals = () => {
           </div>
 
           <div className="md:w-2/3">
-            <ProductGrid 
+            <ProductGrid
               products={filteredProducts}
               loading={loading}
               calculateDiscountPrice={calculateDiscountPrice}
@@ -310,10 +314,10 @@ const WomensSandals = () => {
           </button>
         </div>
 
-        <RelatedProducts 
-          products={getBestSellers()} 
-          title="Bạn Có Thể Thích" 
-          calculateDiscountPrice={calculateDiscountPrice} 
+        <RelatedProducts
+          products={getBestSellers()}
+          title="Bạn Có Thể Thích"
+          calculateDiscountPrice={calculateDiscountPrice}
         />
 
         <CustomerReviews reviews={reviews} />

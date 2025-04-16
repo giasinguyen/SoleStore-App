@@ -9,7 +9,7 @@ const Blog = () => {
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        
+
         const fetchBlogs = async () => {
             try {
                 setLoading(true);
@@ -21,7 +21,7 @@ const Blog = () => {
                 setLoading(false);
             }
         };
-        
+
         fetchBlogs();
     }, []);
 

@@ -22,7 +22,7 @@ export const productAPI = {
       throw error;
     }
   },
-  
+
   getProductById: async (id) => {
     try {
       const response = await api.get(`/products/${id}`);
@@ -32,7 +32,7 @@ export const productAPI = {
       throw error;
     }
   },
-  
+
   getProductsByCategory: async (category) => {
     try {
       const response = await api.get(`/products?category=${category}`);
@@ -55,7 +55,7 @@ export const blogAPI = {
       throw error;
     }
   },
-  
+
   getBlogById: async (id) => {
     try {
       const response = await api.get(`/blogs/${id}`);
@@ -78,7 +78,7 @@ export const reviewAPI = {
       throw error;
     }
   },
-  
+
   addReview: async (reviewData) => {
     try {
       const response = await api.post('/reviews', reviewData);
@@ -101,7 +101,7 @@ export const accountAPI = {
       throw error;
     }
   },
-  
+
   register: async (userData) => {
     try {
       const response = await api.post('/accounts/register', userData);
@@ -111,7 +111,7 @@ export const accountAPI = {
       throw error;
     }
   },
-  
+
   updateAccount: async (id, userData) => {
     try {
       const response = await api.put(`/accounts/${id}`, userData);
@@ -134,7 +134,7 @@ export const cartAPI = {
       throw error;
     }
   },
-  
+
   addToCart: async (cartData) => {
     try {
       const response = await api.post('/cart', cartData);
@@ -144,7 +144,7 @@ export const cartAPI = {
       throw error;
     }
   },
-  
+
   updateCartItem: async (id, data) => {
     try {
       const response = await api.put(`/cart/${id}`, data);
@@ -154,7 +154,7 @@ export const cartAPI = {
       throw error;
     }
   },
-  
+
   removeFromCart: async (id) => {
     try {
       const response = await api.delete(`/cart/${id}`);

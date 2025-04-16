@@ -30,14 +30,14 @@ const Checkout = () => {
         }
     }, [user]);
 
-    const shippingFee = 5;
+    const shippingFee = 50000;
 
     // Format số tiền theo VND
     const formatCurrency = (amount) => {
-        return new Intl.NumberFormat('vi-VN', { 
-            style: 'currency', 
-            currency: 'VND' 
-        }).format(amount); 
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).format(amount);
     };
 
     const showNotification = (message, type) => {
@@ -88,7 +88,7 @@ const Checkout = () => {
         // Lưu đơn hàng vào lịch sử và xóa giỏ hàng
         const savedOrder = saveOrderToHistory(orderDetails);
         setCompletedOrder(savedOrder);
-        
+
         console.log('Đơn hàng đã lưu:', savedOrder);
         setOrderStep(3);
     };
@@ -100,9 +100,9 @@ const Checkout = () => {
     // Hiệu ứng cho container, với trì hoãn hiệu ứng con
     const containerVariants = {
         hidden: { opacity: 0 },
-        visible: { 
+        visible: {
             opacity: 1,
-            transition: { 
+            transition: {
                 duration: 0.5,
                 when: "beforeChildren",
                 staggerChildren: 0.1
@@ -112,24 +112,24 @@ const Checkout = () => {
 
     const itemVariants = {
         hidden: { y: 20, opacity: 0 },
-        visible: { 
-            y: 0, 
+        visible: {
+            y: 0,
             opacity: 1,
             transition: { type: "spring", stiffness: 300, damping: 24 }
         }
     };
 
     const buttonVariants = {
-        hover: { 
+        hover: {
             scale: 1.05,
             boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)",
-            transition: { 
-                type: "spring", 
-                stiffness: 400, 
+            transition: {
+                type: "spring",
+                stiffness: 400,
                 damping: 10
             }
         },
-        tap: { 
+        tap: {
             scale: 0.95
         }
     };
@@ -162,14 +162,14 @@ const Checkout = () => {
                 transition={{ duration: 0.8 }}
             >
                 <div className="absolute inset-0 bg-black opacity-50"></div>
-                
-                <motion.div 
+
+                <motion.div
                     className="container text-center my-5 z-10"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
                 >
-                    <motion.h3 
+                    <motion.h3
                         className="text-white text-3xl font-bold mb-6"
                         initial={{ scale: 0.9 }}
                         animate={{ scale: 1 }}
@@ -206,10 +206,9 @@ const Checkout = () => {
             {/* Notification */}
             <AnimatePresence>
                 {notification.show && (
-                    <motion.div 
-                        className={`fixed top-5 right-5 z-50 px-6 py-3 rounded-lg shadow-lg ${
-                            notification.type === 'success' ? 'bg-green-600' : 'bg-red-600'
-                        } text-white flex items-center`}
+                    <motion.div
+                        className={`fixed top-5 right-5 z-50 px-6 py-3 rounded-lg shadow-lg ${notification.type === 'success' ? 'bg-green-600' : 'bg-red-600'
+                            } text-white flex items-center`}
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 50 }}
@@ -230,7 +229,7 @@ const Checkout = () => {
             </AnimatePresence>
 
             <div className="container mx-auto px-4 z-10 relative">
-                <motion.h2 
+                <motion.h2
                     className="text-4xl font-bold text-white text-center mb-8"
                     initial={{ y: -20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -242,10 +241,9 @@ const Checkout = () => {
                 {/* Các bước thanh toán */}
                 <div className="flex justify-center mb-8">
                     <div className="flex items-center">
-                        <motion.div 
-                            className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${
-                                orderStep >= 1 ? 'bg-gradient-to-r from-blue-600 to-indigo-700' : 'bg-gray-600'
-                            }`}
+                        <motion.div
+                            className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${orderStep >= 1 ? 'bg-gradient-to-r from-blue-600 to-indigo-700' : 'bg-gray-600'
+                                }`}
                             animate={{
                                 scale: orderStep === 1 ? [1, 1.1, 1] : 1
                             }}
@@ -254,10 +252,9 @@ const Checkout = () => {
                             1
                         </motion.div>
                         <div className={`w-16 h-1 ${orderStep >= 2 ? 'bg-indigo-600' : 'bg-gray-600'}`}></div>
-                        <motion.div 
-                            className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${
-                                orderStep >= 2 ? 'bg-gradient-to-r from-blue-600 to-indigo-700' : 'bg-gray-600'
-                            }`}
+                        <motion.div
+                            className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${orderStep >= 2 ? 'bg-gradient-to-r from-blue-600 to-indigo-700' : 'bg-gray-600'
+                                }`}
                             animate={{
                                 scale: orderStep === 2 ? [1, 1.1, 1] : 1
                             }}
@@ -266,10 +263,9 @@ const Checkout = () => {
                             2
                         </motion.div>
                         <div className={`w-16 h-1 ${orderStep >= 3 ? 'bg-indigo-600' : 'bg-gray-600'}`}></div>
-                        <motion.div 
-                            className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${
-                                orderStep >= 3 ? 'bg-gradient-to-r from-blue-600 to-indigo-700' : 'bg-gray-600'
-                            }`}
+                        <motion.div
+                            className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${orderStep >= 3 ? 'bg-gradient-to-r from-blue-600 to-indigo-700' : 'bg-gray-600'
+                                }`}
                             animate={{
                                 scale: orderStep === 3 ? [1, 1.1, 1] : 1
                             }}
@@ -282,7 +278,7 @@ const Checkout = () => {
 
                 <AnimatePresence mode="wait" custom={orderStep}>
                     {orderStep === 1 && (
-                        <motion.div 
+                        <motion.div
                             className="grid grid-cols-1 lg:grid-cols-3 gap-8"
                             key="step1"
                             custom={1}
@@ -293,7 +289,7 @@ const Checkout = () => {
                             transition={{ type: "spring", stiffness: 300, damping: 30 }}
                         >
                             {/* Thông tin giao hàng */}
-                            <motion.div 
+                            <motion.div
                                 className="lg:col-span-2"
                                 variants={containerVariants}
                                 initial="hidden"
@@ -303,7 +299,7 @@ const Checkout = () => {
                                     <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-4">
                                         <h3 className="font-bold text-lg">Thông tin giao hàng</h3>
                                     </div>
-                                    
+
                                     <div className="p-6 space-y-5">
                                         <motion.div variants={itemVariants}>
                                             <label className="block text-white text-sm font-medium mb-2">
@@ -337,7 +333,7 @@ const Checkout = () => {
                                                 </span>
                                             </div>
                                         </motion.div>
-                                        
+
                                         <motion.div variants={itemVariants}>
                                             <label className="block text-white text-sm font-medium mb-2">
                                                 Số điện thoại
@@ -370,7 +366,7 @@ const Checkout = () => {
                                                 </span>
                                             </div>
                                         </motion.div>
-                                        
+
                                         <motion.div variants={itemVariants}>
                                             <label className="block text-white text-sm font-medium mb-2">
                                                 Địa chỉ giao hàng
@@ -409,21 +405,19 @@ const Checkout = () => {
                                                 </span>
                                             </div>
                                         </motion.div>
-                                        
+
                                         <motion.div variants={itemVariants}>
                                             <label className="block text-white text-sm font-medium mb-2">
                                                 Phương thức thanh toán
                                             </label>
                                             <div className="space-y-3 mt-2">
-                                                <div 
-                                                    className={`flex items-center p-3 rounded-lg cursor-pointer border transition-colors ${
-                                                        paymentMethod === 'cod' ? 'border-blue-500 bg-blue-900/30' : 'border-white/30 bg-white/10'
-                                                    }`}
+                                                <div
+                                                    className={`flex items-center p-3 rounded-lg cursor-pointer border transition-colors ${paymentMethod === 'cod' ? 'border-blue-500 bg-blue-900/30' : 'border-white/30 bg-white/10'
+                                                        }`}
                                                     onClick={() => setPaymentMethod('cod')}
                                                 >
-                                                    <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
-                                                        paymentMethod === 'cod' ? 'border-blue-500' : 'border-white/60'
-                                                    }`}>
+                                                    <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${paymentMethod === 'cod' ? 'border-blue-500' : 'border-white/60'
+                                                        }`}>
                                                         {paymentMethod === 'cod' && (
                                                             <div className="w-3 h-3 rounded-full bg-blue-500"></div>
                                                         )}
@@ -433,16 +427,14 @@ const Checkout = () => {
                                                         <p className="text-sm text-gray-300">Thanh toán bằng tiền mặt khi nhận được hàng</p>
                                                     </div>
                                                 </div>
-                                                
-                                                <div 
-                                                    className={`flex items-center p-3 rounded-lg cursor-pointer border transition-colors ${
-                                                        paymentMethod === 'bank' ? 'border-blue-500 bg-blue-900/30' : 'border-white/30 bg-white/10'
-                                                    }`}
+
+                                                <div
+                                                    className={`flex items-center p-3 rounded-lg cursor-pointer border transition-colors ${paymentMethod === 'bank' ? 'border-blue-500 bg-blue-900/30' : 'border-white/30 bg-white/10'
+                                                        }`}
                                                     onClick={() => setPaymentMethod('bank')}
                                                 >
-                                                    <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
-                                                        paymentMethod === 'bank' ? 'border-blue-500' : 'border-white/60'
-                                                    }`}>
+                                                    <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${paymentMethod === 'bank' ? 'border-blue-500' : 'border-white/60'
+                                                        }`}>
                                                         {paymentMethod === 'bank' && (
                                                             <div className="w-3 h-3 rounded-full bg-blue-500"></div>
                                                         )}
@@ -454,8 +446,8 @@ const Checkout = () => {
                                                 </div>
                                             </div>
                                         </motion.div>
-                                        
-                                        <motion.div 
+
+                                        <motion.div
                                             className="pt-4"
                                             variants={itemVariants}
                                         >
@@ -477,7 +469,7 @@ const Checkout = () => {
                             </motion.div>
 
                             {/* Tóm tắt đơn hàng */}
-                            <motion.div 
+                            <motion.div
                                 className="lg:col-span-1"
                                 initial={{ x: 20, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
@@ -491,9 +483,9 @@ const Checkout = () => {
                                         <div className="space-y-3 mb-4 max-h-60 overflow-auto pr-2">
                                             {orderList.map(item => (
                                                 <div key={item.id} className="flex items-start">
-                                                    <img 
-                                                        src={item.image} 
-                                                        alt={item.name} 
+                                                    <img
+                                                        src={item.image}
+                                                        alt={item.name}
                                                         className="w-12 h-12 object-cover rounded mr-3"
                                                     />
                                                     <div className="flex-1">
@@ -506,7 +498,7 @@ const Checkout = () => {
                                                 </div>
                                             ))}
                                         </div>
-                                        
+
                                         <div className="space-y-3 mb-4">
                                             <div className="flex justify-between">
                                                 <span className="text-gray-300">Tạm tính:</span>
@@ -517,7 +509,7 @@ const Checkout = () => {
                                                 <span>{formatCurrency(shippingFee)}</span>
                                             </div>
                                         </div>
-                                        
+
                                         <div className="border-t border-white/20 pt-4">
                                             <div className="flex justify-between font-bold text-lg">
                                                 <span>Tổng cộng:</span>
@@ -537,7 +529,7 @@ const Checkout = () => {
                     )}
 
                     {orderStep === 2 && (
-                        <motion.div 
+                        <motion.div
                             className="grid grid-cols-1 lg:grid-cols-3 gap-8"
                             key="step2"
                             custom={2}
@@ -548,7 +540,7 @@ const Checkout = () => {
                             transition={{ type: "spring", stiffness: 300, damping: 30 }}
                         >
                             {/* Xác nhận thông tin */}
-                            <motion.div 
+                            <motion.div
                                 className="lg:col-span-2"
                                 variants={containerVariants}
                                 initial="hidden"
@@ -558,13 +550,13 @@ const Checkout = () => {
                                     <div className="bg-gradient-to-r from-green-600 to-emerald-700 text-white p-4">
                                         <h3 className="font-bold text-lg">Xác nhận thông tin đơn hàng</h3>
                                     </div>
-                                    
+
                                     <div className="p-6">
-                                        <motion.div 
+                                        <motion.div
                                             className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"
                                             variants={containerVariants}
                                         >
-                                            <motion.div 
+                                            <motion.div
                                                 className="bg-white/5 p-4 rounded-lg border border-white/10"
                                                 variants={itemVariants}
                                             >
@@ -575,16 +567,16 @@ const Checkout = () => {
                                                     <p><span className="text-white font-medium">Địa chỉ:</span> {address}</p>
                                                 </div>
                                             </motion.div>
-                                            
-                                            <motion.div 
+
+                                            <motion.div
                                                 className="bg-white/5 p-4 rounded-lg border border-white/10"
                                                 variants={itemVariants}
                                             >
                                                 <h4 className="text-white font-medium text-lg mb-3">Phương thức thanh toán</h4>
                                                 <div className="space-y-2 text-gray-300">
                                                     <p>
-                                                        {paymentMethod === 'cod' 
-                                                            ? 'Thanh toán khi nhận hàng (COD)' 
+                                                        {paymentMethod === 'cod'
+                                                            ? 'Thanh toán khi nhận hàng (COD)'
                                                             : 'Chuyển khoản ngân hàng'
                                                         }
                                                     </p>
@@ -600,8 +592,8 @@ const Checkout = () => {
                                                 </div>
                                             </motion.div>
                                         </motion.div>
-                                        
-                                        <motion.div 
+
+                                        <motion.div
                                             className="mb-6"
                                             variants={itemVariants}
                                         >
@@ -610,9 +602,9 @@ const Checkout = () => {
                                                 <div className="divide-y divide-gray-700/30">
                                                     {orderList.map(item => (
                                                         <div key={item.id} className="flex items-center p-3">
-                                                            <img 
-                                                                src={item.image} 
-                                                                alt={item.name} 
+                                                            <img
+                                                                src={item.image}
+                                                                alt={item.name}
                                                                 className="w-12 h-12 object-cover rounded mr-3"
                                                             />
                                                             <div className="flex-1">
@@ -628,8 +620,8 @@ const Checkout = () => {
                                                 </div>
                                             </div>
                                         </motion.div>
-                                        
-                                        <motion.div 
+
+                                        <motion.div
                                             className="flex flex-col md:flex-row space-y-3 md:space-y-0 space-x-0 md:space-x-3"
                                             variants={itemVariants}
                                         >
@@ -663,7 +655,7 @@ const Checkout = () => {
                             </motion.div>
 
                             {/* Tóm tắt đơn hàng */}
-                            <motion.div 
+                            <motion.div
                                 className="lg:col-span-1"
                                 initial={{ x: 20, opacity: 0 }}
                                 animate={{ x: 0, opacity: 1 }}
@@ -684,7 +676,7 @@ const Checkout = () => {
                                                 <span>{formatCurrency(shippingFee)}</span>
                                             </div>
                                         </div>
-                                        
+
                                         <div className="border-t border-white/20 pt-4">
                                             <div className="flex justify-between font-bold text-lg">
                                                 <span>Tổng cộng:</span>
@@ -708,7 +700,7 @@ const Checkout = () => {
                     )}
 
                     {orderStep === 3 && (
-                        <motion.div 
+                        <motion.div
                             className="grid grid-cols-1 gap-8 max-w-2xl mx-auto"
                             key="step3"
                             custom={3}
@@ -718,7 +710,7 @@ const Checkout = () => {
                             exit="exit"
                             transition={{ type: "spring", stiffness: 300, damping: 30 }}
                         >
-                            <motion.div 
+                            <motion.div
                                 className="backdrop-blur-md bg-white/10 rounded-xl shadow-2xl overflow-hidden border border-white/20 text-center"
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
@@ -727,7 +719,7 @@ const Checkout = () => {
                                 <div className="bg-gradient-to-r from-green-600 to-emerald-700 text-white p-4">
                                     <h3 className="font-bold text-lg">Đặt hàng thành công</h3>
                                 </div>
-                                
+
                                 <div className="p-8 flex flex-col items-center">
                                     <motion.div
                                         initial={{ scale: 0 }}
@@ -740,7 +732,7 @@ const Checkout = () => {
                                         </svg>
                                     </motion.div>
 
-                                    <motion.h4 
+                                    <motion.h4
                                         className="text-2xl font-bold text-white mb-2"
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
@@ -748,8 +740,8 @@ const Checkout = () => {
                                     >
                                         Cảm ơn bạn đã đặt hàng!
                                     </motion.h4>
-                                    
-                                    <motion.p 
+
+                                    <motion.p
                                         className="text-gray-300 mb-3"
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
@@ -757,7 +749,7 @@ const Checkout = () => {
                                     >
                                         Đơn hàng của bạn đã được tiếp nhận và đang được xử lý.
                                     </motion.p>
-                                    
+
                                     {completedOrder && (
                                         <motion.div
                                             className="bg-white/10 p-4 rounded-lg mb-6 text-left border border-white/20"
@@ -769,7 +761,7 @@ const Checkout = () => {
                                             <p className="text-white text-sm">Bạn có thể theo dõi đơn hàng trong mục "Đơn hàng của tôi" trên trang cá nhân.</p>
                                         </motion.div>
                                     )}
-                                    
+
                                     <div className="flex flex-col md:flex-row gap-4 w-full">
                                         <motion.button
                                             onClick={() => navigate('/account')}
@@ -786,7 +778,7 @@ const Checkout = () => {
                                             </svg>
                                             Xem đơn hàng
                                         </motion.button>
-                                        
+
                                         <motion.button
                                             onClick={handleGoHome}
                                             className="flex-1 py-3 px-4 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"

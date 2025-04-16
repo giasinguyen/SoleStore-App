@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 // Create a context for managing orders
 const OrderContext = createContext();
@@ -55,9 +55,9 @@ export const OrderProvider = ({ children }) => {
     };
 
     // Update quantity of an item in cart
-    const updateQuantity = (id, newQuantity) => {
-        setOrderList(orderList.map(item => 
-            item.id === id ? { ...item, quantity: parseInt(newQuantity) } : item
+    const updateQuantity = (id, size, newQuantity) => {
+        setOrderList(orderList.map(item =>
+            ((item.id === id) && (item.size == size)) ? { ...item, quantity: parseInt(newQuantity) } : item
         ));
     };
 
@@ -75,7 +75,7 @@ export const OrderProvider = ({ children }) => {
     const saveOrderToHistory = (orderDetails) => {
         // Generate a unique order ID
         const orderId = `ORD-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
-        
+
         // Create the complete order object
         const completedOrder = {
             id: orderId,
@@ -84,13 +84,13 @@ export const OrderProvider = ({ children }) => {
             items: [...orderList],
             ...orderDetails
         };
-        
+
         // Add to order history
         setOrderHistory([completedOrder, ...orderHistory]);
-        
+
         // Clear cart
         clearCart();
-        
+
         return completedOrder;
     };
 

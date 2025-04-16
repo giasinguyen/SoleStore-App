@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { FaStar } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
+import { FaStar } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const RelatedProducts = ({ products, title, calculateDiscountPrice }) => {
   const getNumericPrice = (priceStr) => {
@@ -21,7 +21,7 @@ const RelatedProducts = ({ products, title, calculateDiscountPrice }) => {
     // Sử dụng hàm được truyền từ trang cha
     const discountedValue = calculateDiscountPrice(price, discount);
     // Định dạng kết quả
-    return typeof discountedValue === 'number' 
+    return typeof discountedValue === 'number'
       ? discountedValue.toLocaleString('vi-VN') + 'đ'
       : discountedValue;
   };
@@ -30,7 +30,7 @@ const RelatedProducts = ({ products, title, calculateDiscountPrice }) => {
     return (
       <div className="flex items-center">
         {[...Array(5)].map((_, i) => (
-          <FaStar 
+          <FaStar
             key={i}
             className={
               i < Math.floor(rating) ? "text-yellow-400" : "text-gray-300"
@@ -47,10 +47,10 @@ const RelatedProducts = ({ products, title, calculateDiscountPrice }) => {
   const getProductImage = (product) => {
     if (product.images && product.images.length > 0) {
       return product.images[0];
-    } 
+    }
     else if (product.image) {
       return product.image;
-    } 
+    }
     else {
       return "https://via.placeholder.com/400x500?text=No+Image";
     }
@@ -76,7 +76,7 @@ const RelatedProducts = ({ products, title, calculateDiscountPrice }) => {
             key={product.id}
             className="bg-white rounded-lg shadow-md h-full overflow-hidden group hover:shadow-lg transition-shadow duration-300"
           >
-            <Link to={`/product/${product.id}`}>
+            <Link to={`/product/${product.id}`} style={{ textDecoration: "none" }}>
               <div
                 className="overflow-hidden relative"
                 style={{ height: "220px" }}
@@ -96,6 +96,7 @@ const RelatedProducts = ({ products, title, calculateDiscountPrice }) => {
                 <img
                   src={getProductImage(product)}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+
                   alt={product.name}
                   onError={(e) => {
                     e.target.src = "https://via.placeholder.com/400x500?text=No+Image";
@@ -107,8 +108,9 @@ const RelatedProducts = ({ products, title, calculateDiscountPrice }) => {
                 <div className="mb-2 flex justify-center">
                   {renderRating(product.rating)}
                 </div>
-                
-                <h3 className="font-semibold text-lg mb-2 line-clamp-2 leading-snug group-hover:text-blue-600 transition-colors text-gray-900">
+
+                <h3 className="font-semibold text-lg mb-2 line-clamp-2 leading-snug group-hover:text-blue-600 transition-colors text-gray-900" style={{ textDecoration: "none" }}>
+
                   {product.name}
                 </h3>
 
@@ -128,7 +130,7 @@ const RelatedProducts = ({ products, title, calculateDiscountPrice }) => {
                     </span>
                   )}
                 </div>
-                
+
                 <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
                   <span className="inline-block bg-gray-100 text-gray-800 text-xs font-medium px-3 py-1.5 rounded-full">
                     Xem chi tiết
