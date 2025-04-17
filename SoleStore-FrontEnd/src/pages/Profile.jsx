@@ -10,6 +10,7 @@ import TabNavigation from "../components/profile/TabNavigation";
 import ProfileTab from "../components/profile/ProfileTab";
 import OrdersTab from "../components/profile/OrdersTab";
 import SettingsTab from "../components/profile/SettingsTab";
+import OrderDetail from "../components/profile/OrderDetail";
 
 const Profile = ({ user, accounts, setAccounts, setUser, onLogout }) => {
   // ----------------- State Management -----------------
@@ -17,12 +18,14 @@ const Profile = ({ user, accounts, setAccounts, setUser, onLogout }) => {
   const [address, setAddress] = useState(user?.address || "");
   const [newPassword, setNewPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
-  const [activeTab, setActiveTab] = useState("profile"); // profile, orders, settings
+  const [activeTab, setActiveTab] = useState("profile"); 
   const [notification, setNotification] = useState({
     show: false,
     message: "",
-    type: "success", 
+    type: "success",
   });
+  const [selectedOrder, setSelectedOrder] = useState(null);
+
 
   // ------------- Side Effects -------------
   useEffect(() => {
@@ -50,7 +53,7 @@ const Profile = ({ user, accounts, setAccounts, setUser, onLogout }) => {
       });
       return;
     }
-    
+
     const updatedUser = { ...user, address };
     setUser(updatedUser);
 
@@ -75,7 +78,7 @@ const Profile = ({ user, accounts, setAccounts, setUser, onLogout }) => {
       });
       return;
     }
-    
+
     if (!newPassword) {
       setNotification({
         show: true,
@@ -111,90 +114,104 @@ const Profile = ({ user, accounts, setAccounts, setUser, onLogout }) => {
     setNewPassword("");
   };
 
+  // Hàm mở modal chi tiết đơn hàng
+  const openOrderDetail = (order) => {
+    setSelectedOrder(order);
+    // Ngăn cuộn trang khi modal mở
+    document.body.style.overflow = "hidden";
+  };
+
+  // Hàm đóng modal chi tiết đơn hàng
+  const closeOrderDetail = () => {
+    setSelectedOrder(null);
+    // Cho phép cuộn trang lại khi đóng modal
+    document.body.style.overflow = "auto";
+  };
+
   // ------------- Animation Variants -------------
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
-      transition: { 
+      transition: {
         duration: 0.5,
         when: "beforeChildren",
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
+    visible: {
+      y: 0,
       opacity: 1,
-      transition: { type: "spring", stiffness: 300, damping: 24 }
-    }
+      transition: { type: "spring", stiffness: 300, damping: 24 },
+    },
   };
 
   const buttonVariants = {
-    hover: { 
+    hover: {
       scale: 1.05,
       boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)",
-      transition: { 
-        type: "spring", 
-        stiffness: 400, 
-        damping: 10
-      }
+      transition: {
+        type: "spring",
+        stiffness: 400,
+        damping: 10,
+      },
     },
-    tap: { 
-      scale: 0.95
-    }
+    tap: {
+      scale: 0.95,
+    },
   };
 
   const cardVariants = {
     hover: {
       y: -8,
       boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.4)",
-      transition: { 
-        type: "spring", 
-        stiffness: 300, 
-        damping: 15 
-      }
-    }
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 15,
+      },
+    },
   };
 
   const tabVariants = {
-    inactive: { 
+    inactive: {
       opacity: 0.7,
-      y: 0
+      y: 0,
     },
-    active: { 
+    active: {
       opacity: 1,
       y: 0,
       scale: 1.05,
-      transition: { 
-        type: "spring", 
-        stiffness: 300, 
-        damping: 20 
-      }
-    }
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 20,
+      },
+    },
   };
 
   const contentVariants = {
     hidden: { opacity: 0, x: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       x: 0,
-      transition: { 
-        type: "spring", 
-        stiffness: 300, 
-        damping: 20 
-      }
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 20,
+      },
     },
-    exit: { 
-      opacity: 0, 
+    exit: {
+      opacity: 0,
       x: -20,
-      transition: { 
-        duration: 0.2
-      }
-    }
+      transition: {
+        duration: 0.2,
+      },
+    },
   };
 
   // Status color mapping for order status badges
@@ -207,27 +224,29 @@ const Profile = ({ user, accounts, setAccounts, setUser, onLogout }) => {
 
   // Format currency in VND
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('vi-VN', { 
-      style: 'currency', 
-      currency: 'VND',
-      maximumFractionDigits: 0
-    }).format(amount); 
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+      maximumFractionDigits: 0,
+    }).format(amount);
   };
 
   // Format date to readable format
   const formatDate = (dateString) => {
-    const options = { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     };
-    return new Date(dateString).toLocaleDateString('vi-VN', options);
+    return new Date(dateString).toLocaleDateString("vi-VN", options);
   };
 
   // Lọc đơn hàng theo userId để chỉ hiển thị đơn hàng của người dùng hiện tại
-  const userOrders = orderHistory.filter(order => !order.userId || order.userId === user?.id);
+  const userOrders = orderHistory.filter(
+    (order) => !order.userId || order.userId === user?.id
+  );
 
   return (
     <motion.div
@@ -243,38 +262,38 @@ const Profile = ({ user, accounts, setAccounts, setUser, onLogout }) => {
       <Notification notification={notification} />
 
       <div className="container mx-auto px-4">
-        <motion.div 
+        <motion.div
           className="bg-black/40 backdrop-blur-md rounded-2xl p-6 md:p-8 max-w-6xl mx-auto"
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 300, 
-            damping: 20, 
-            delay: 0.2 
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 20,
+            delay: 0.2,
           }}
         >
           {/* Header với phần chào mừng và nút đăng xuất */}
-          <ProfileHeader 
-            user={user} 
-            onLogout={onLogout} 
+          <ProfileHeader
+            user={user}
+            onLogout={onLogout}
             containerVariants={containerVariants}
             itemVariants={itemVariants}
             buttonVariants={buttonVariants}
           />
 
           {/* Tab điều hướng */}
-          <TabNavigation 
-            activeTab={activeTab} 
-            setActiveTab={setActiveTab} 
-            containerVariants={containerVariants} 
-            tabVariants={tabVariants} 
+          <TabNavigation
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            containerVariants={containerVariants}
+            tabVariants={tabVariants}
           />
 
           {/* Nội dung các tab */}
           <AnimatePresence mode="wait">
             {activeTab === "profile" && (
-              <ProfileTab 
+              <ProfileTab
                 user={user}
                 address={address}
                 setAddress={setAddress}
@@ -286,11 +305,12 @@ const Profile = ({ user, accounts, setAccounts, setUser, onLogout }) => {
                 buttonVariants={buttonVariants}
                 cardVariants={cardVariants}
                 setActiveTab={setActiveTab}
+                openOrderDetail={openOrderDetail}
               />
             )}
 
             {activeTab === "orders" && (
-              <OrdersTab 
+              <OrdersTab
                 orderHistory={userOrders}
                 formatCurrency={formatCurrency}
                 formatDate={formatDate}
@@ -299,11 +319,12 @@ const Profile = ({ user, accounts, setAccounts, setUser, onLogout }) => {
                 itemVariants={itemVariants}
                 buttonVariants={buttonVariants}
                 statusColors={statusColors}
+                openOrderDetail={openOrderDetail}
               />
             )}
 
             {activeTab === "settings" && (
-              <SettingsTab 
+              <SettingsTab
                 currentPassword={currentPassword}
                 setCurrentPassword={setCurrentPassword}
                 newPassword={newPassword}
@@ -319,6 +340,18 @@ const Profile = ({ user, accounts, setAccounts, setUser, onLogout }) => {
           </AnimatePresence>
         </motion.div>
       </div>
+
+      <AnimatePresence>
+        {selectedOrder && (
+          <OrderDetail
+            order={selectedOrder}
+            closeDetail={closeOrderDetail}
+            formatCurrency={formatCurrency}
+            formatDate={formatDate}
+            statusColors={statusColors}
+          />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
@@ -328,7 +361,7 @@ Profile.propTypes = {
   accounts: PropTypes.array.isRequired,
   setAccounts: PropTypes.func.isRequired,
   setUser: PropTypes.func.isRequired,
-  onLogout: PropTypes.func.isRequired
+  onLogout: PropTypes.func.isRequired,
 };
 
 export default Profile;

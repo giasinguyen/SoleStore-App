@@ -2,7 +2,17 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const OrdersTab = ({ orderHistory, formatCurrency, formatDate, contentVariants, containerVariants, itemVariants, buttonVariants, statusColors }) => {
+const OrdersTab = ({ 
+  orderHistory, 
+  formatCurrency, 
+  formatDate, 
+  contentVariants, 
+  containerVariants, 
+  itemVariants, 
+  buttonVariants, 
+  statusColors,
+  openOrderDetail 
+}) => {
   return (
     <motion.div
       key="orders"
@@ -97,6 +107,7 @@ const OrdersTab = ({ orderHistory, formatCurrency, formatDate, contentVariants, 
                     <div className="text-white">{order.address}</div>
                   </div>
                   <motion.button
+                    onClick={() => openOrderDetail(order)}
                     className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded font-medium"
                     variants={buttonVariants}
                     whileHover="hover"
@@ -122,7 +133,8 @@ OrdersTab.propTypes = {
   containerVariants: PropTypes.object.isRequired,
   itemVariants: PropTypes.object.isRequired,
   buttonVariants: PropTypes.object.isRequired,
-  statusColors: PropTypes.object.isRequired
+  statusColors: PropTypes.object.isRequired,
+  openOrderDetail: PropTypes.func.isRequired
 };
 
 export default OrdersTab;
